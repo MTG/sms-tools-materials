@@ -4,20 +4,38 @@ sms-tools-materials
 
 material accompanying the sms-tools package (https://github.com/MTG/sms-tools), including lecture material, exercises, sounds, and interfaces to the sms-tools models.
 
-The graphical interface and individual example functions to the models in <code>interface-models</code>. To execute the models GUI you have to go to the directory <code>interface-models</code> and type: 
+Installation
+------------
 
-<code>$ python models_GUI.py </code>
+To install sms-tools and jupyter notebook, create a virtual environment and install the dependencies.
+On Mac/Linux this will be:
 
-To execute the transformations GUI that calls various sound transformation functions go to the directory <code>interface-transformations</code> and type: 
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -r requirements.txt
 
-<code>$ python transformations_GUI.py </code>
+Graphical Interfaces
+--------------------
 
+The graphical interface and individual example functions to the models in `interface-models`.
+To execute the models GUI, change to the directory and run:
 
-The exercises, in the <code>exercises</code> directory, are jupyter notebooks. To read them and do them, Install Jupyter Notebook according to it's instructions https://jupyter.org/install
+     python models_GUI.py
+
+To execute the transformations GUI that calls various sound transformation functions, change to
+the directory `interface-transformations` and run:
+
+    python transformations_GUI.py
+
+Exercises
+---------
+
+The exercises, in the `exercises` directory, are jupyter notebooks. To read them and do them,
+Install Jupyter Notebook according to its instructions https://jupyter.org/install
 
 Start up jupyter notebook
 
-<code>$ jupyter notebook</code> 
+    jupyter notebook
 
 
 License
