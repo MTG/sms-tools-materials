@@ -20,7 +20,7 @@ Most exercises require the use of sound files. You can use your own, making sure
 
 Within the code, we use floating point arrays to store the sound samples, thus the samples in the audio files are converted to floating point values with a range from -1 to 1. The wavread function from the utilFunctions module in the sms-tools reads a wav file and returns a floating-point array with the sample values normalized to the range -1 to 1, which is what we want. 
 
-Testing you code
+Testing your code
 
 After you complete a part of an exercise, make sure you run and test the code. All the programming exercises questions require that you write python functions. Each question will give a basic function template, specifying an input, or a type of input, and what output the function has to return. 
 
