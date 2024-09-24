@@ -2,7 +2,7 @@ sms-tools-materials
 ==================
 
 
-material accompanying the sms-tools package (https://github.com/MTG/sms-tools), including lecture material, exercises, sounds, and interfaces to the sms-tools models.
+Material accompanying the sms-tools package (https://github.com/MTG/sms-tools), including lecture material, exercises, sounds, examples, and graphical interfaces to the sms-tools models.
 
 Installation
 ------------
@@ -30,15 +30,13 @@ the directory `interface-transformations` and run:
 Exercises
 ---------
 
-The exercises, in the `exercises` directory, are jupyter notebooks. To read them and do them,
-Install Jupyter Notebook according to its instructions https://jupyter.org/install
+The exercises, in the `exercises` directory, are jupyter notebooks. To read them and do them you should install Jupyter Notebook.
 
-Start up jupyter notebook
+Examples
+---------
 
-    jupyter notebook
-
+The examples, in the `examples` directory, are jupyter notebooks covering most of the models and transformation functions.
 
 License
 -------
 All the software is distributed with the Affero GPL license (http://www.gnu.org/licenses/agpl-3.0.en.html), the lecture slides are distributed under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (CC BY-NC-SA 4.0) license (http://creativecommons.org/licenses/by-nc-sa/4.0/) and the sounds in this repository are released under Creative Commons Attribution 4.0 (CC BY 4.0) license (http://creativecommons.org/licenses/by/4.0/)
-
