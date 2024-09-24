@@ -1,2 +1,6 @@
 sms-tools
 notebook
+matplotlib
+numpy
+scipy
+ipython
