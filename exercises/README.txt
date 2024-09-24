@@ -12,11 +12,11 @@ To start working with the software of sms-tools you need to install some depende
 
 Working directory for exercises
 
-In sms-tools there is a folder called workspace. We will use this folder as our working directory for all the programming exercises. You should copy the notebook of the exercise you want to do to the workspace directory. 
+In sms-tools-materials there is a folder called workspace. We will use this folder as our working directory for all the programming exercises. You should copy the notebook of the exercise you want to do to the workspace directory. 
 
 Sound files
 
-Most exercises require the use of sound files. You can use your own, making sure that they are in the right format, or you can use the ones in the folder sounds of sms-tools, which are all in the required format. To facilitate the work, we have restricted the formats of sound files to use. You should always use wav audio files that are mono (one channel), sampled at 44100 Hz and stored as 16 bit integers. 
+Most exercises require the use of sound files. You can use your own, making sure that they are in the right format, or you can use the ones in the folder sounds of sms-tools-materials, which are all in the required format. To facilitate the work, we have restricted the formats of sound files to use. You should always use wav audio files that are mono (one channel), sampled at 44100 Hz and stored as 16 bit integers. 
 
 Within the code, we use floating point arrays to store the sound samples, thus the samples in the audio files are converted to floating point values with a range from -1 to 1. The wavread function from the utilFunctions module in the sms-tools reads a wav file and returns a floating-point array with the sample values normalized to the range -1 to 1, which is what we want. 
 
