@@ -3,8 +3,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
-import sys, os
-
 from smstools.models import stft as STFT
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stftTransformations as STFTT

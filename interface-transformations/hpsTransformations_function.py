@@ -3,7 +3,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
-import sys, os
 from smstools.models import hpsModel as HPS
 from smstools.transformations import hpsTransformations as HPST
 from smstools.transformations import harmonicTransformations as HT

@@ -2,7 +2,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import sys, os
 from smstools.models import stochasticModel as STC
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stochasticTransformations as STCT
