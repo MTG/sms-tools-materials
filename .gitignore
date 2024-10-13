@@ -19,6 +19,9 @@ node_modules/
 interface-models/output_sounds/*.wav
 interface-transformations/output_sounds/*.wav
 
+# ignore generated imge files
+*.png
+
 #ignore working directories
 labs/
 labs-solutions
