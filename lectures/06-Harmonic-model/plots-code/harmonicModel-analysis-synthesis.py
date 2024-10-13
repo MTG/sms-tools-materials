@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
-import sys, os, functools, time
 from smstools.models import harmonicModel as HM
 from smstools.models import sineModel as SM
 from smstools.models import utilFunctions as UF

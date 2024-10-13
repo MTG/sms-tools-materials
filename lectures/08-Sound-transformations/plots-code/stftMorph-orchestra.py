@@ -1,6 +1,4 @@
 import numpy as np
-import time, os, sys
-from scipy.signal import hamming, resample
 import matplotlib.pyplot as plt
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stftTransformations as STFTT

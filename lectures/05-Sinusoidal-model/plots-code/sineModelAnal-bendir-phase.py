@@ -1,12 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import sys, os, time
-
 from smstools.models import stft as STFT
 from smstools.models import sineModel as SM
 from smstools.models import utilFunctions as UF
 
-(fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/bendir.wav'))
+(fs, x) = UF.wavread('../../../sounds/bendir.wav')
 w = np.hamming(2001)
 N = 2048
 H = 200

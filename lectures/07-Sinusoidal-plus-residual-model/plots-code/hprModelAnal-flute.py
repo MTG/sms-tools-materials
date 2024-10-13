@@ -1,14 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
-import math
-import sys, os, time
 from smstools.models import stft as STFT
 from smstools.models import utilFunctions as UF
 from smstools.models import harmonicModel as HM
 
 
-(fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/flute-A4.wav'))
+(fs, x) = UF.wavread('../../../sounds/flute-A4.wav')
 w = np.blackman(551)
 N = 1024
 t = -100
@@ -25,7 +22,7 @@ H = Ns//4
 mX, pX = STFT.stftAnal(x, w, N, H)
 hfreq, hmag, hphase = HM.harmonicModelAnal(x, fs, w, N, H, t, nH, minf0, maxf0, f0et, harmDevSlope, minSineDur)
 xr = UF.sineSubtraction(x, Ns, H, hfreq, hmag, hphase, fs)
-mXr, pXr = STFT.stftAnal(xr, hamming(Ns), Ns, H)
+mXr, pXr = STFT.stftAnal(xr, np.hamming(Ns), Ns, H)
 
 maxplotfreq = 5000.0
 plt.figure(1, figsize=(9, 7))

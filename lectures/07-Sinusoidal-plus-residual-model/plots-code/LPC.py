@@ -1,8 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
-import math
-import sys, os, time
 from scipy.fftpack import fft, ifft
 import essentia.standard as ess
 from smstools.models import utilFunctions as UF
@@ -14,7 +11,7 @@ N= 512
 first = 20000
 last = first+N
 x1 = x[first:last]
-X = fft(hamming(N)*x1)
+X = fft(np.hamming(N)*x1)
 mX = 20 * np.log10(abs(X[:N//2]))
 
 coeff = lpc(x1)

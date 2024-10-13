@@ -1,11 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
 from scipy.fftpack import fft, ifft, fftshift
-import math
-import sys, os, functools, time
+from scipy.signal import get_window
 eps = np.finfo(float).eps
-
 from smstools.models import utilFunctions as UF
 
 Ns = 256
@@ -24,7 +21,7 @@ absmY = abs(Y[:hNs])
 absmY[absmY < eps] = eps
 mY = 20*np.log10(absmY)
 pY = np.unwrap(np.angle(Y[:hNs]))
-y= fftshift(ifft(Y))*sum(blackmanharris(Ns))
+y= fftshift(ifft(Y))*sum(get_window('blackmanharris',Ns))
 
 plt.figure(1, figsize=(9, 5))
 plt.subplot(3,1,1)

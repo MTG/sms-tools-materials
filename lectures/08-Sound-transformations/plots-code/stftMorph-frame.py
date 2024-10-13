@@ -1,7 +1,6 @@
 import numpy as np
-import time, os, sys
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, resample
+from scipy.signal import resample
 from smstools.models import dftModel as DFT
 from smstools.models import utilFunctions as UF
 import math

@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming
 from scipy.fftpack import fft, fftshift
 
 plt.figure(1, figsize=(9.5, 6))

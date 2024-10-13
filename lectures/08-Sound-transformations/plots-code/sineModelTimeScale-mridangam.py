@@ -1,10 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
-from scipy.fftpack import fft, ifft, fftshift
-import math
-import sys, os, functools, time
-from scipy.interpolate import interp1d
 from smstools.models import stft as STFT
 from smstools.models import sineModel as SM
 from smstools.models import utilFunctions as UF

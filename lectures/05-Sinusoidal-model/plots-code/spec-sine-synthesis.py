@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
-import sys, os, functools, time
+from scipy.signal import get_window
 from smstools.models import dftModel as DFT
 
 M = 255
@@ -13,7 +12,7 @@ A0 = .9
 ph = 1.5
 t = np.arange(-hM,hM+1)/float (fs)
 x = A0 * np.cos(2*np.pi*f0*t+ph)
-w = hamming(255)
+w = np.hamming(255)
 mX, pX = DFT.dftAnal(x, w, N)
 y = DFT.dftSynth(mX,pX,M)*sum(w)
 freqaxis = fs*np.arange(mX.size)/float(N)
@@ -35,7 +34,7 @@ plt.plot(np.arange(-hM,hM+1), y[0:M], 'b', lw=1.5)
 plt.axis([-hM,hM+1,-1,1])
 plt.title ('y1')
 
-w = blackmanharris(255)
+w = get_window('blackmanharris', 255)
 mX, pX = DFT.dftAnal(x, w, N)
 y = DFT.dftSynth(mX,pX,M)*sum(w)
 

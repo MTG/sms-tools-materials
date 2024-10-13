@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
-import math
+from scipy.signal import get_window
 from scipy.fftpack import fft, ifft, fftshift
-import sys, os, functools, time
 from smstools.models import dftModel as DFT
 from smstools.models import utilFunctions as UF
 from smstools.models import harmonicModel as HM
@@ -38,7 +36,7 @@ hfreq, hmag, hphase = HM.harmonicDetection(ipfreq, ipmag, ipphase, f0, nH, hfreq
 Yh = UF.genSpecSines(hfreq, hmag, hphase, Ns, fs)
 mYh = 20 * np.log10(abs(Yh[:Ns//2]))
 pYh = np.unwrap(np.angle(Yh[:Ns//2]))
-bh=blackmanharris(Ns)
+bh= get_window('blackmanharris', Ns)
 X2 = fft(fftshift(x2*bh/sum(bh)))
 Xr = X2-Yh
 mXr = 20 * np.log10(abs(Xr[:Ns//2]))

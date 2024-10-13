@@ -1,13 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
-import math
-import sys, os, time
 from smstools.models import utilFunctions as UF
 from smstools.models import hpsModel as HPS
 
 
-(fs, x) = UF.wavread(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../../../sounds/sax-phrase-short.wav'))
+(fs, x) = UF.wavread('../../../sounds/sax-phrase-short.wav')
 w = np.blackman(601)
 N = 1024
 t = -100

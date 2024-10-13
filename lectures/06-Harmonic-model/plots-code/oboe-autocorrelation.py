@@ -1,9 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import math
-import time, os, sys
 import essentia.standard as ess
-
 from smstools.models import utilFunctions as UF
 (fs, x) = UF.wavread('../../../sounds/oboe-A4.wav')
 

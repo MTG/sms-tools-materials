@@ -1,8 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import time, os, sys
-import math
-
 from smstools.models import dftModel as DFT
 from smstools.models import utilFunctions as UF
 

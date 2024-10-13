@@ -1,5 +1,4 @@
 import numpy as np
-import time, os, sys
 import matplotlib.pyplot as plt
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stftTransformations as STFTT

@@ -1,8 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming
-import sys, os
-import essentia
 import essentia.standard as ess
 
 from smstools.models import utilFunctions as UF

@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
 from scipy.fftpack import fft, ifft
-import math
-import sys, os, functools, time
+from scipy.signal import get_window
 eps = np.finfo(float).eps
 
 M = 256
@@ -17,7 +15,7 @@ ph = 1.5
 t = np.arange(-hM,hM)/float(fs)
 x = A0 * np.cos(2*np.pi*f0*t+ph)
 
-w = hamming(M)
+w = np.hamming(M)
 xw = x*w
 fftbuffer = np.zeros(N)
 fftbuffer[0:M] = xw
@@ -61,7 +59,7 @@ plt.plot(np.real(yerror), 'k', lw=1.5)
 plt.axis([0,M,-.003,.003])
 plt.title ("error function: x-y; SNR = ${%d}$ dB" %(SNR1))
 
-w = blackmanharris(M)
+w = get_window('blackmanharris', M)
 xw = x*w
 fftbuffer = np.zeros(N)
 fftbuffer[0:M] = xw

@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import time, os, sys
-import math
 from smstools.models import utilFunctions as UF
 from smstools.models import dftModel as DF
 (fs, x) = UF.wavread('../../../sounds/trumpet-A4.wav')

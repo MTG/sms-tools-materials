@@ -1,8 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, hanning, triang, blackmanharris, resample
-import math
-import sys, os, functools, time
 from smstools.models import sineModel as SM
 from smstools.models import stft as STFT
 from smstools.models import utilFunctions as UF

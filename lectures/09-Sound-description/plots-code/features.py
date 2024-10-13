@@ -47,7 +47,7 @@ def plotFeatures(inputDir, descInput = ('',''), anotOn =0):
       filepath = os.path.join(inputDir, category, soundId, dataDetails[category][soundId]['file'])
       descSound = json.load(open(filepath, 'r'))
       if not descSound.has_key(descriptors[0]) or not descSound.has_key(descriptors[1]):
-          print "Please provide descriptors which are extracted and saved before"
+          print ("Please provide descriptors which are extracted and saved before")
           return -1
       if "mfcc" in descriptors[0]:
         x_cord = descSound[descriptors[0]][0][mfccInd[0]]

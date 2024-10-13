@@ -1,8 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackman
-import math
-import sys, os, functools, time
 from smstools.models import dftModel as DFT
 from smstools.models import utilFunctions as UF
 
@@ -58,7 +55,7 @@ t = -40
 start = int(.8*fs)
 minf0 = 100
 maxf0 = 1500
-w = blackman (M)
+w = np.blackman (M)
 x1 = x[start:start+M]
 mX, pX = DFT.dftAnal(x1, w, N)
 ploc = UF.peakDetection(mX, t)

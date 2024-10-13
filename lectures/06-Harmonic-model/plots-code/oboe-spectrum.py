@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import hamming, triang, blackmanharris
 import math
-import sys, os, functools, time
 from smstools.models import dftModel as DFT
 from smstools.models import utilFunctions as UF
 

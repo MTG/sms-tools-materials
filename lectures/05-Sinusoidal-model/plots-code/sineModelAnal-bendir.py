@@ -1,7 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import sys, os, time
-
 from smstools.models import stft as STFT
 from smstools.models import sineModel as SM
 from smstools.models import utilFunctions as UF

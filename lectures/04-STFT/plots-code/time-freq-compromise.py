@@ -1,12 +1,7 @@
 import numpy as np
-import time, os, sys
-
 from smstools.models import stft as STFT
 from smstools.models import utilFunctions as UF
 import matplotlib.pyplot as plt
-from scipy.signal import hamming
-from scipy.fftpack import fft
-import math
 
 (fs, x) = UF.wavread('../../../sounds/piano.wav')
 
