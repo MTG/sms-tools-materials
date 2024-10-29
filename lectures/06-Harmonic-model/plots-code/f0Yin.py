@@ -32,7 +32,7 @@ if __name__ == '__main__':
   plt.figure(1, figsize=(9, 7))
   N = 2048
   H = 256
-  w = hamming(2048)
+  w = np.hamming(2048)
   mX, pX = STFT.stftAnal(x, w, N, H)
   maxplotfreq = 2000.0
   frmTime = H*np.arange(mX[:,0].size)/float(fs)
