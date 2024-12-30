@@ -1,5 +1,6 @@
 # function for doing a morph between two sounds using the stft
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window

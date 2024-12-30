@@ -1,5 +1,6 @@
 # function call to the transformation function of relevance to the stochasticModel
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from smstools.models import stochasticModel as STC
