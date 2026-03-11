@@ -2,6 +2,9 @@
 .venv/
 env/
 
+# Ignore local environment variables (API keys, secrets)
+.env
+
 # Ignore compiled Python files
 *.pyc
 __pycache__/
