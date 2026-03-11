@@ -169,17 +169,3 @@ def clusterSounds(targetDir, nCluster = -1):
     print "Sounds in cluster number " + str(ii+1)
     ind = np.where(clusResults==ii)[0]
     print infoArr[ind]
-  
-  
-    
-
-  
-  
-  
-  
-  
-      
-    
-    
-    
-  

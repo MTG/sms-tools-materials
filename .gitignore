@@ -2,6 +2,9 @@
 .venv/
 env/
 
+# Ignore local environment variables (API keys, secrets)
+.env
+
 # Ignore compiled Python files
 *.pyc
 __pycache__/
@@ -28,3 +31,9 @@ labs-solutions
 
 # ignore generated wav files in lecture plots
 lectures/*/plots-code/*.wav
+
+# ignore generated Freesound data directories
+examples/descSounds/
+examples/svm_query_sound/
+examples/svm_results/
+examples/svm_train_sounds/
