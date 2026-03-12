@@ -39,9 +39,7 @@ def main(
     if normalization == 1:
         y = y * max(x) / max(y)
 
-    outputFile = (
-        "output_sounds/" + os.path.basename(inputFile)[:-4] + "_stochasticModel.wav"
-    )
+    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_stochasticModel.wav"
 
     # write output sound
     UF.wavwrite(y, fs, outputFile)

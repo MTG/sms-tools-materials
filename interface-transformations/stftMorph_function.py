@@ -54,7 +54,7 @@ def main(
     mY, pY = STFT.stftAnal(y, w1, N1, H1)
 
     # write output sound
-    outputFile = "output_sounds/" + os.path.basename(inputFile1)[:-4] + "_stftMorph.wav"
+    outputFile = f"output_sounds/{os.path.basename(inputFile1)[:-4]}_stftMorph.wav"
     UF.wavwrite(y, fs, outputFile)
 
     # create figure to plot

@@ -58,13 +58,9 @@ def main(
     y, ys = SPR.sprModelSynth(tfreq, tmag, tphase, xr, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
-    outputFileSines = (
-        "output_sounds/" + os.path.basename(inputFile)[:-4] + "_sprModel_sines.wav"
-    )
-    outputFileResidual = (
-        "output_sounds/" + os.path.basename(inputFile)[:-4] + "_sprModel_residual.wav"
-    )
-    outputFile = "output_sounds/" + os.path.basename(inputFile)[:-4] + "_sprModel.wav"
+    outputFileSines = f"output_sounds/{os.path.basename(inputFile)[:-4]}_sprModel_sines.wav"
+    outputFileResidual = f"output_sounds/{os.path.basename(inputFile)[:-4]}_sprModel_residual.wav"
+    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_sprModel.wav"
 
     # write sounds files for sinusoidal, residual, and the sum
     UF.wavwrite(ys, fs, outputFileSines)

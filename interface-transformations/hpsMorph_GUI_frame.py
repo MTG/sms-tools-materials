@@ -262,7 +262,7 @@ class HpsMorph_frame:
         self.transf_output = Button(
             self.parent,
             text="> Play Output",
-            command=lambda: UF.wavplay("output_sounds/" + os.path.basename(self.filelocation1.get())[:-4] + "_hpsMorph.wav"),
+            command=lambda: UF.wavplay(f"output_sounds/{os.path.basename(self.filelocation1.get())[:-4]}_hpsMorph.wav"),
         )
         self.transf_output.grid(row=row_num, column=0, columnspan=4, sticky=W, padx=5, pady=(0, 10))
 

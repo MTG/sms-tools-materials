@@ -56,13 +56,9 @@ def main(
     y, yh, yst = HPS.hpsModelSynth(hfreq, hmag, hphase, stocEnv, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
-    outputFileSines = (
-        "output_sounds/" + os.path.basename(inputFile)[:-4] + "_hpsModel_sines.wav"
-    )
-    outputFileStochastic = (
-        "output_sounds/" + os.path.basename(inputFile)[:-4] + "_hpsModel_stochastic.wav"
-    )
-    outputFile = "output_sounds/" + os.path.basename(inputFile)[:-4] + "_hpsModel.wav"
+    outputFileSines = f"output_sounds/{os.path.basename(inputFile)[:-4]}_hpsModel_sines.wav"
+    outputFileStochastic = f"output_sounds/{os.path.basename(inputFile)[:-4]}_hpsModel_stochastic.wav"
+    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_hpsModel.wav"
 
     # write sounds files for harmonics, stochastic, and the sum
     UF.wavwrite(yh, fs, outputFileSines)

@@ -7,10 +7,7 @@ class notebook(object):
         self.count = 0
         self.choice = IntVar()
         self._pending = {}  # fr -> build_func, called on first display
-        if side in (TOP, BOTTOM):
-            self.side = LEFT
-        else:
-            self.side = TOP
+        self.side = LEFT if side in (TOP, BOTTOM) else TOP
         self.rb_fr = Frame(master, borderwidth=2, relief=GROOVE)
         self.rb_fr.pack(side=side, fill=BOTH)
 

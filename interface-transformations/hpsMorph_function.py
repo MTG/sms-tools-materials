@@ -201,7 +201,7 @@ def transformation_synthesis(
     y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
     # write output sound
-    outputFile = "output_sounds/" + os.path.basename(inputFile1)[:-4] + "_hpsMorph.wav"
+    outputFile = f"output_sounds/{os.path.basename(inputFile1)[:-4]}_hpsMorph.wav"
     UF.wavwrite(y, fs, outputFile)
 
     # create figure to plot

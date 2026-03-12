@@ -54,13 +54,9 @@ def main(
     y, ys, yst = SPS.spsModelSynth(tfreq, tmag, tphase, stocEnv, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
-    outputFileSines = (
-        "output_sounds/" + os.path.basename(inputFile)[:-4] + "_spsModel_sines.wav"
-    )
-    outputFileStochastic = (
-        "output_sounds/" + os.path.basename(inputFile)[:-4] + "_spsModel_stochastic.wav"
-    )
-    outputFile = "output_sounds/" + os.path.basename(inputFile)[:-4] + "_spsModel.wav"
+    outputFileSines = f"output_sounds/{os.path.basename(inputFile)[:-4]}_spsModel_sines.wav"
+    outputFileStochastic = f"output_sounds/{os.path.basename(inputFile)[:-4]}_spsModel_stochastic.wav"
+    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_spsModel.wav"
 
     # write sounds files for sinusoidal, residual, and the sum
     UF.wavwrite(ys, fs, outputFileSines)

@@ -64,7 +64,7 @@ def analysis(
     y, yh, yst = HPS.hpsModelSynth(hfreq, hmag, np.array([]), mYst, Ns, H, fs)
 
     # write output sound
-    outputFile = "output_sounds/" + os.path.basename(inputFile)[:-4] + "_hpsModel.wav"
+    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_hpsModel.wav"
     UF.wavwrite(y, fs, outputFile)
 
     # create figure to plot

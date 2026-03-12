@@ -33,7 +33,7 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="hamming", M=1
     y = STFT.stftSynth(mX, pX, M, H)
 
     # output sound file (monophonic with sampling rate of 44100)
-    outputFile = "output_sounds/" + os.path.basename(inputFile)[:-4] + "_stft.wav"
+    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_stft.wav"
 
     # write the sound resulting from the inverse stft
     UF.wavwrite(y, fs, outputFile)

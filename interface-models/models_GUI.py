@@ -1,5 +1,6 @@
 import matplotlib
 import tkinter as tk
+from contextlib import suppress
 
 matplotlib.use("Agg")
 matplotlib.rcParams["toolbar"] = "toolbar2"
@@ -39,10 +40,8 @@ def install_embedded_plot_viewer(root):
             manager = getattr(getattr(fig, "canvas", None), "manager", None)
             native_window = getattr(manager, "window", None)
             if native_window is not None:
-                try:
+                with suppress(Exception):
                     native_window.withdraw()
-                except Exception:
-                    pass
 
             existing_window = getattr(fig, "_sms_plot_window", None)
             if existing_window is not None and existing_window.winfo_exists():
