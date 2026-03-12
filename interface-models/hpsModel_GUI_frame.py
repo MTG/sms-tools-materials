@@ -14,6 +14,8 @@ class HpsModel_frame:
     def __init__(self, parent):
 
         self.parent = parent
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+        self.sounds_dir = os.path.normpath(os.path.join(self.base_dir, "..", "sounds"))
         self.initUI()
 
     def initUI(self):
@@ -29,7 +31,7 @@ class HpsModel_frame:
         self.filelocation["width"] = 25
         self.filelocation.grid(row=1, column=0, sticky=W, padx=10)
         self.filelocation.delete(0, END)
-        self.filelocation.insert(0, "../sounds/sax-phrase-short.wav")
+        self.filelocation.insert(0, os.path.join(self.sounds_dir, "sax-phrase-short.wav"))
 
         # BUTTON TO BROWSE SOUND FILE
         self.open_file = Button(
@@ -231,7 +233,7 @@ class HpsModel_frame:
         self.file_opt = options = {}
         options["defaultextension"] = ".wav"
         options["filetypes"] = [("All files", ".*"), ("Wav files", ".wav")]
-        options["initialdir"] = "../../sounds/"
+        options["initialdir"] = self.sounds_dir
         options["title"] = "Open a mono audio file .wav with sample frequency 44100 Hz"
 
     def browse_file(self):

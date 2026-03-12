@@ -1,13 +1,16 @@
 # function to call the main analysis/synthesis functions in software/models/dftModel.py
 
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 from smstools.models import utilFunctions as UF
 from smstools.models import dftModel as DFT
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
-def main(inputFile="../sounds/piano.wav", window="blackman", M=511, N=1024, time=0.2):
+
+def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="blackman", M=511, N=1024, time=0.2):
     """
     inputFile: input sound file (monophonic with sampling rate of 44100)
     window: analysis window type (choice of rectangular, hann, hamming, blackman, blackmanharris)

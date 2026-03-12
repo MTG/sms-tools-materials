@@ -8,10 +8,12 @@ from smstools.models import stft as STFT
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stftTransformations as STFTT
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def main(
-    inputFile1="../sounds/ocean.wav",
-    inputFile2="../sounds/speech-male.wav",
+    inputFile1=os.path.join(_sounds_dir, "ocean.wav"),
+    inputFile2=os.path.join(_sounds_dir, "speech-male.wav"),
     window1="hamming",
     window2="hamming",
     M1=1024,

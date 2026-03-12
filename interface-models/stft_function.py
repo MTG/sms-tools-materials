@@ -7,8 +7,10 @@ from scipy.signal import get_window
 from smstools.models import utilFunctions as UF
 from smstools.models import stft as STFT
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
-def main(inputFile="../sounds/piano.wav", window="hamming", M=1024, N=1024, H=512):
+
+def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="hamming", M=1024, N=1024, H=512):
     """
     analysis/synthesis using the STFT
     inputFile: input sound file (monophonic with sampling rate of 44100)

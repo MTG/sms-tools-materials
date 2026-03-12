@@ -7,9 +7,11 @@ import sys, os
 from smstools.models import utilFunctions as UF
 from smstools.models import hpsModel as HPS
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def main(
-    inputFile="../sounds/sax-phrase-short.wav",
+    inputFile=os.path.join(_sounds_dir, "sax-phrase-short.wav"),
     window="blackman",
     M=601,
     N=1024,

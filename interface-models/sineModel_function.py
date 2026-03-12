@@ -7,9 +7,11 @@ import os, sys
 from smstools.models import utilFunctions as UF
 from smstools.models import sineModel as SM
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def main(
-    inputFile="../sounds/bendir.wav",
+    inputFile=os.path.join(_sounds_dir, "bendir.wav"),
     window="hamming",
     M=2001,
     N=2048,

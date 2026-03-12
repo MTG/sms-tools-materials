@@ -14,6 +14,8 @@ class StftMorph_frame:
     def __init__(self, parent):
 
         self.parent = parent
+        self.base_dir = os.path.dirname(os.path.abspath(__file__))
+        self.sounds_dir = os.path.normpath(os.path.join(self.base_dir, "..", "sounds"))
         self.initUI()
 
     def initUI(self):
@@ -30,7 +32,7 @@ class StftMorph_frame:
         self.filelocation1["width"] = 30
         self.filelocation1.grid(row=0, column=0, sticky=W, padx=(75, 5), pady=(10, 2))
         self.filelocation1.delete(0, END)
-        self.filelocation1.insert(0, "../sounds/ocean.wav")
+        self.filelocation1.insert(0, os.path.join(self.sounds_dir, "ocean.wav"))
 
         # BUTTON TO BROWSE SOUND FILE 1
         open_file1 = Button(
@@ -116,7 +118,7 @@ class StftMorph_frame:
         self.filelocation2["width"] = 30
         self.filelocation2.grid(row=3, column=0, sticky=W, padx=(75, 5), pady=(2, 2))
         self.filelocation2.delete(0, END)
-        self.filelocation2.insert(0, "../sounds/speech-male.wav")
+        self.filelocation2.insert(0, os.path.join(self.sounds_dir, "speech-male.wav"))
 
         # BUTTON TO BROWSE SOUND FILE 2
         open_file2 = Button(
@@ -235,7 +237,7 @@ class StftMorph_frame:
         self.file_opt = options = {}
         options["defaultextension"] = ".wav"
         options["filetypes"] = [("All files", ".*"), ("Wav files", ".wav")]
-        options["initialdir"] = "../../sounds/"
+        options["initialdir"] = self.sounds_dir
         options["title"] = "Open a mono audio file .wav with sample frequency 44100 Hz"
 
     def browse_file1(self):

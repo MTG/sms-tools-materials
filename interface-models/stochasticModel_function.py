@@ -8,9 +8,11 @@ from smstools.models import utilFunctions as UF
 from smstools.models import stochasticModel as STM
 from smstools.models import stft as STFT
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def main(
-    inputFile="../sounds/ocean.wav",
+    inputFile=os.path.join(_sounds_dir, "ocean.wav"),
     H=256,
     N=512,
     stocf=0.1,

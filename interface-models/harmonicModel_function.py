@@ -8,9 +8,11 @@ from smstools.models import utilFunctions as UF
 from smstools.models import sineModel as SM
 from smstools.models import harmonicModel as HM
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def main(
-    inputFile="../sounds/vignesh.wav",
+    inputFile=os.path.join(_sounds_dir, "vignesh.wav"),
     window="blackman",
     M=1201,
     N=2048,

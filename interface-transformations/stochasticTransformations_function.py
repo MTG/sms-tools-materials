@@ -7,9 +7,11 @@ from smstools.models import stochasticModel as STC
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stochasticTransformations as STCT
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def main(
-    inputFile="../../sounds/rain.wav", stocf=0.1, timeScaling=np.array([0, 0, 1, 2])
+    inputFile=os.path.join(_sounds_dir, "rain.wav"), stocf=0.1, timeScaling=np.array([0, 0, 1, 2])
 ):
     """
     function to perform a time scaling using the stochastic model

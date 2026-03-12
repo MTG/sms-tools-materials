@@ -8,9 +8,11 @@ from smstools.models import utilFunctions as UF
 from smstools.models import hprModel as HPR
 from smstools.models import stft as STFT
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def main(
-    inputFile="../sounds/sax-phrase-short.wav",
+    inputFile=os.path.join(_sounds_dir, "sax-phrase-short.wav"),
     window="blackman",
     M=601,
     N=1024,

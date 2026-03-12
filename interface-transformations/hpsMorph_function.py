@@ -8,9 +8,11 @@ from smstools.models import hpsModel as HPS
 from smstools.transformations import hpsTransformations as HPST
 from smstools.models import utilFunctions as UF
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def analysis(
-    inputFile1="../sounds/violin-B3.wav",
+    inputFile1=os.path.join(_sounds_dir, "violin-B3.wav"),
     window1="blackman",
     M1=1001,
     N1=1024,
@@ -22,7 +24,7 @@ def analysis(
     f0et1=10,
     harmDevSlope1=0.01,
     stocf=0.1,
-    inputFile2="../../sounds/soprano-E4.wav",
+    inputFile2=os.path.join(_sounds_dir, "soprano-E4.wav"),
     window2="blackman",
     M2=901,
     N2=1024,

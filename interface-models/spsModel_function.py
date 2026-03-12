@@ -7,9 +7,11 @@ from scipy.signal import get_window
 from smstools.models import spsModel as SPS
 from smstools.models import utilFunctions as UF
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def main(
-    inputFile="../sounds/bendir.wav",
+    inputFile=os.path.join(_sounds_dir, "bendir.wav"),
     window="hamming",
     M=2001,
     N=2048,

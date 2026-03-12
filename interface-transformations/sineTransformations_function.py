@@ -8,9 +8,11 @@ from smstools.models import sineModel as SM
 from smstools.transformations import sineTransformations as ST
 from smstools.models import utilFunctions as UF
 
+_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
 
 def analysis(
-    inputFile="../sounds/mridangam.wav",
+    inputFile=os.path.join(_sounds_dir, "mridangam.wav"),
     window="hamming",
     M=801,
     N=2048,
