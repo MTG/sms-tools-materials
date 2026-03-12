@@ -8,6 +8,15 @@ from smstools.models import stft as STFT
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stftTransformations as STFTT
 
+
+def _plot_waveform(sound, fs, title="sound"):
+    """Helper to plot a waveform consistently."""
+    plt.plot(np.arange(sound.size) / float(fs), sound)
+    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
+    plt.ylabel("amplitude")
+    plt.xlabel("time (sec)")
+    plt.title(title)
+
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
 
@@ -65,11 +74,7 @@ def main(
 
     # plot sound 1
     plt.subplot(4, 1, 1)
-    plt.plot(np.arange(x1.size) / float(fs), x1)
-    plt.axis([0, x1.size / float(fs), min(x1), max(x1)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("input sound: x")
+    _plot_waveform(x1, fs, "input sound: x")
 
     # plot magnitude spectrogram of sound 1
     plt.subplot(4, 1, 2)
@@ -99,11 +104,7 @@ def main(
 
     # plot the morphed sound
     plt.subplot(4, 1, 4)
-    plt.plot(np.arange(y.size) / float(fs), y)
-    plt.axis([0, y.size / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("output sound: y")
+    _plot_waveform(y, fs, "output sound: y")
 
     plt.tight_layout()
     plt.show()

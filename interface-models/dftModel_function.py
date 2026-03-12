@@ -7,6 +7,15 @@ from scipy.signal import get_window
 from smstools.models import utilFunctions as UF
 from smstools.models import dftModel as DFT
 
+
+def _plot_waveform(sound, fs, M, time, title="sound"):
+    """Helper to plot a waveform consistently with time offset."""
+    plt.plot(time + np.arange(M) / float(fs), sound)
+    plt.axis([time, time + M / float(fs), min(sound), max(sound)])
+    plt.ylabel("amplitude")
+    plt.xlabel("time (sec)")
+    plt.title(title)
+
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
 
@@ -42,11 +51,7 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="blackman", M=
 
     # plot the sound fragment
     plt.subplot(4, 1, 1)
-    plt.plot(time + np.arange(M) / float(fs), x1)
-    plt.axis([time, time + M / float(fs), min(x1), max(x1)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("input sound: x")
+    _plot_waveform(x1, fs, M, time, "input sound: x")
 
     # plot the magnitude spectrum
     plt.subplot(4, 1, 2)
@@ -65,11 +70,7 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="blackman", M=
 
     # plot the sound resulting from the inverse dft
     plt.subplot(4, 1, 4)
-    plt.plot(time + np.arange(M) / float(fs), y)
-    plt.axis([time, time + M / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("output sound: y")
+    _plot_waveform(y, fs, M, time, "output sound: y")
 
     plt.tight_layout()
     plt.ion()

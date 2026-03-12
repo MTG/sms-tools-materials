@@ -34,9 +34,7 @@ def _row_sort_key(item):
 
 
 def _default_sticky(widget):
-    if isinstance(widget, (Entry, Menubutton)):
-        return "ew"
-    return "w"
+    return "ew" if isinstance(widget, (Entry, Menubutton)) else "w"
 
 
 def apply_responsive_grid(container):

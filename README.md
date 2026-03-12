@@ -83,7 +83,8 @@ Generated audio files are written to:
 Running the Graphical Interfaces
 --------------------------------
 
-### Recommended launcher
+Recommended launcher
+---
 
 From the repository root, run:
 
@@ -96,7 +97,8 @@ This opens a small launcher window where you can choose:
 
 On macOS, you can also double-click [launch_gui.command](launch_gui.command).
 
-### Models GUI
+Models GUI
+---
 
 You can still launch the models interface directly:
 
@@ -105,7 +107,8 @@ You can still launch the models interface directly:
 
 This launcher gives access to several model interfaces, including DFT, STFT, sinusoidal, harmonic, stochastic, and combined models.
 
-### Transformations GUI
+Transformations GUI
+---
 
 You can also launch the transformations interface directly:
 
@@ -171,12 +174,12 @@ License
 
 All software is distributed under the **GNU Affero GPL v3**:
 
-- http://www.gnu.org/licenses/agpl-3.0.en.html
+- <http://www.gnu.org/licenses/agpl-3.0.en.html>
 
 Lecture slides are distributed under **Creative Commons Attribution-NonCommercial-ShareAlike 4.0**:
 
-- http://creativecommons.org/licenses/by-nc-sa/4.0/
+- <http://creativecommons.org/licenses/by-nc-sa/4.0/>
 
 Sounds in this repository are released under **Creative Commons Attribution 4.0**:
 
-- http://creativecommons.org/licenses/by/4.0/
+- <http://creativecommons.org/licenses/by/4.0/>

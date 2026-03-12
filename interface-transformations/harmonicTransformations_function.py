@@ -12,7 +12,23 @@ from smstools.transformations import sineTransformations as ST
 from smstools.transformations import harmonicTransformations as HT
 from smstools.models import utilFunctions as UF
 
+
+def _plot_waveform(sound, fs, title="sound"):
+    """Helper to plot a waveform consistently."""
+    plt.plot(np.arange(sound.size) / float(fs), sound)
+    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
+    plt.ylabel("amplitude")
+    plt.xlabel("time (sec)")
+    plt.title(title)
+
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
+
+def _mask_frequencies(freq, maxfreq):
+    """Mask frequencies above maxfreq and set zeros to NaN."""
+    masked = np.copy(freq) * np.less(freq, maxfreq)
+    masked[masked <= 0] = np.nan
+    return masked
 
 
 def analysis(
@@ -79,11 +95,7 @@ def analysis(
 
     # plot the input sound
     plt.subplot(3, 1, 1)
-    plt.plot(np.arange(x.size) / float(fs), x)
-    plt.axis([0, x.size / float(fs), min(x), max(x)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("input sound: x")
+    _plot_waveform(x, fs, "input sound: x")
 
     if hfreq.shape[1] > 0:
         plt.subplot(3, 1, 2)
@@ -97,11 +109,7 @@ def analysis(
 
     # plot the output sound
     plt.subplot(3, 1, 3)
-    plt.plot(np.arange(y.size) / float(fs), y)
-    plt.axis([0, y.size / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("output sound: y")
+    _plot_waveform(y, fs, "output sound: y")
 
     plt.tight_layout()
     plt.show(block=False)
@@ -160,9 +168,7 @@ def transformation_synthesis(
     # plot the transformed sinusoidal frequencies
     plt.subplot(2, 1, 1)
     if yhfreq.shape[1] > 0:
-        tracks = np.copy(yhfreq)
-        tracks = tracks * np.less(tracks, maxplotfreq)
-        tracks[tracks <= 0] = np.nan
+        tracks = _mask_frequencies(yhfreq, maxplotfreq)
         numFrames = int(tracks[:, 0].size)
         frmTime = H * np.arange(numFrames) / float(fs)
         plt.plot(frmTime, tracks)
@@ -171,11 +177,7 @@ def transformation_synthesis(
 
     # plot the output sound
     plt.subplot(2, 1, 2)
-    plt.plot(np.arange(y.size) / float(fs), y)
-    plt.axis([0, y.size / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("output sound: y")
+    _plot_waveform(y, fs, "output sound: y")
 
     plt.tight_layout()
     plt.show()

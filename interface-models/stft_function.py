@@ -7,7 +7,24 @@ from scipy.signal import get_window
 from smstools.models import utilFunctions as UF
 from smstools.models import stft as STFT
 
+
+def _plot_waveform(sound, fs, title="sound"):
+    """Helper to plot a waveform consistently."""
+    plt.plot(np.arange(sound.size) / float(fs), sound)
+    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
+    plt.ylabel("amplitude")
+    plt.xlabel("time (sec)")
+    plt.title(title)
+
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
+
+def _label_spectrogram(title):
+    """Add standard labels to a spectrogram plot."""
+    plt.xlabel("time (sec)")
+    plt.ylabel("frequency (Hz)")
+    plt.title(title)
+    plt.autoscale(tight=True)
 
 
 def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="hamming", M=1024, N=1024, H=512):
@@ -46,11 +63,7 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="hamming", M=1
 
     # plot the input sound
     plt.subplot(4, 1, 1)
-    plt.plot(np.arange(x.size) / float(fs), x)
-    plt.axis([0, x.size / float(fs), min(x), max(x)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("input sound: x")
+    _plot_waveform(x, fs, "input sound: x")
 
     # plot magnitude spectrogram
     plt.subplot(4, 1, 2)
@@ -60,10 +73,7 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="hamming", M=1
     plt.pcolormesh(
         frmTime, binFreq, np.transpose(mX[:, : int(N * maxplotfreq / fs + 1)])
     )
-    plt.xlabel("time (sec)")
-    plt.ylabel("frequency (Hz)")
-    plt.title("magnitude spectrogram")
-    plt.autoscale(tight=True)
+    _label_spectrogram("magnitude spectrogram")
 
     # plot the phase spectrogram
     plt.subplot(4, 1, 3)
@@ -75,18 +85,11 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="hamming", M=1
         binFreq,
         np.transpose(np.diff(pX[:, : int(N * maxplotfreq / fs + 1)], axis=1)),
     )
-    plt.xlabel("time (sec)")
-    plt.ylabel("frequency (Hz)")
-    plt.title("phase spectrogram (derivative)")
-    plt.autoscale(tight=True)
+    _label_spectrogram("phase spectrogram (derivative)")
 
     # plot the output sound
     plt.subplot(4, 1, 4)
-    plt.plot(np.arange(y.size) / float(fs), y)
-    plt.axis([0, y.size / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("output sound: y")
+    _plot_waveform(y, fs, "output sound: y")
 
     plt.tight_layout()
     plt.ion()

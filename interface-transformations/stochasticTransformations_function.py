@@ -7,6 +7,15 @@ from smstools.models import stochasticModel as STC
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stochasticTransformations as STCT
 
+
+def _plot_waveform(sound, fs, title="sound"):
+    """Helper to plot a waveform consistently."""
+    plt.plot(np.arange(sound.size) / float(fs), sound)
+    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
+    plt.ylabel("amplitude")
+    plt.xlabel("time (sec)")
+    plt.title(title)
+
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
 
@@ -48,11 +57,7 @@ def main(
 
     # plot the input sound
     plt.subplot(4, 1, 1)
-    plt.plot(np.arange(x.size) / float(fs), x)
-    plt.axis([0, x.size / float(fs), min(x), max(x)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("input sound: x")
+    _plot_waveform(x, fs, "input sound: x")
 
     # plot stochastic representation
     plt.subplot(4, 1, 2)
@@ -78,10 +83,7 @@ def main(
 
     # plot the output sound
     plt.subplot(4, 1, 4)
-    plt.plot(np.arange(y.size) / float(fs), y)
-    plt.axis([0, y.size / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
+    _plot_waveform(y, fs, "output sound: y")
 
     plt.tight_layout()
     plt.show()

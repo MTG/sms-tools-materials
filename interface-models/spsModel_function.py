@@ -7,7 +7,23 @@ from scipy.signal import get_window
 from smstools.models import spsModel as SPS
 from smstools.models import utilFunctions as UF
 
+
+def _plot_waveform(sound, fs, title="sound"):
+    """Helper to plot a waveform consistently."""
+    plt.plot(np.arange(sound.size) / float(fs), sound)
+    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
+    plt.ylabel("amplitude")
+    plt.xlabel("time (sec)")
+    plt.title(title)
+
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
+
+def _mask_frequencies(freq, maxfreq):
+    """Mask frequencies above maxfreq and set zeros to NaN."""
+    masked = freq * np.less(freq, maxfreq)
+    masked[masked <= 0] = np.nan
+    return masked
 
 
 def main(
@@ -71,11 +87,7 @@ def main(
 
     # plot the input sound
     plt.subplot(3, 1, 1)
-    plt.plot(np.arange(x.size) / float(fs), x)
-    plt.axis([0, x.size / float(fs), min(x), max(x)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("input sound: x")
+    _plot_waveform(x, fs, "input sound: x")
 
     plt.subplot(3, 1, 2)
     numFrames = int(stocEnv[:, 0].size)
@@ -92,8 +104,7 @@ def main(
 
     # plot sinusoidal frequencies on top of stochastic component
     if tfreq.shape[1] > 0:
-        sines = tfreq * np.less(tfreq, maxplotfreq)
-        sines[sines == 0] = np.nan
+        sines = _mask_frequencies(tfreq, maxplotfreq)
         numFrames = int(sines[:, 0].size)
         frmTime = H * np.arange(numFrames) / float(fs)
         plt.plot(frmTime, sines, color="k", ms=3, alpha=1)
@@ -104,11 +115,7 @@ def main(
 
     # plot the output sound
     plt.subplot(3, 1, 3)
-    plt.plot(np.arange(y.size) / float(fs), y)
-    plt.axis([0, y.size / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("output sound: y")
+    _plot_waveform(y, fs, "output sound: y")
 
     plt.tight_layout()
     plt.ion()

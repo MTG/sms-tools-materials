@@ -8,7 +8,23 @@ from smstools.models import hpsModel as HPS
 from smstools.transformations import hpsTransformations as HPST
 from smstools.models import utilFunctions as UF
 
+
+def _plot_waveform(sound, fs, title="sound"):
+    """Helper to plot a waveform consistently."""
+    plt.plot(np.arange(sound.size) / float(fs), sound)
+    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
+    plt.ylabel("amplitude")
+    plt.xlabel("time (sec)")
+    plt.title(title)
+
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
+
+
+def _mask_frequencies(freq, maxfreq):
+    """Mask frequencies above maxfreq and set zeros to NaN."""
+    masked = np.copy(freq) * np.less(freq, maxfreq)
+    masked[masked == 0] = np.nan
+    return masked
 
 
 def analysis(
@@ -144,9 +160,7 @@ def analysis(
 
     # plot harmonic on top of stochastic spectrogram of sound 2
     if hfreq2.shape[1] > 0:
-        harms = np.copy(hfreq2)
-        harms = harms * np.less(harms, maxplotfreq)
-        harms[harms == 0] = np.nan
+        harms = _mask_frequencies(hfreq2, maxplotfreq)
         numFrames = int(harms[:, 0].size)
         frmTime = H * np.arange(numFrames) / float(fs2)
         plt.plot(frmTime, harms, color="k", ms=3, alpha=1)
@@ -225,9 +239,7 @@ def transformation_synthesis(
 
     # plot transformed harmonic on top of stochastic spectrogram
     if yhfreq.shape[1] > 0:
-        harms = np.copy(yhfreq)
-        harms = harms * np.less(harms, maxplotfreq)
-        harms[harms == 0] = np.nan
+        harms = _mask_frequencies(yhfreq, maxplotfreq)
         numFrames = int(harms[:, 0].size)
         frmTime = H * np.arange(numFrames) / float(fs)
         plt.plot(frmTime, harms, color="k", ms=3, alpha=1)
@@ -238,11 +250,7 @@ def transformation_synthesis(
 
     # plot the output sound
     plt.subplot(2, 1, 2)
-    plt.plot(np.arange(y.size) / float(fs), y)
-    plt.axis([0, y.size / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("output sound: y")
+    _plot_waveform(y, fs, "output sound: y")
 
     plt.tight_layout()
     plt.show()
