@@ -4,7 +4,7 @@ from tkinter import *
 import sys, os
 from tkinter import filedialog, messagebox
 
-from gui_layout import apply_responsive_grid
+from gui_layout import apply_responsive_grid, make_entry
 import stochasticModel_function
 from smstools.models import utilFunctions as UF
 
@@ -20,8 +20,7 @@ class StochasticModel_frame:
 
     def initUI(self):
 
-        choose_label = "Input file (.wav, mono and 44100 sampling rate):"
-        Label(self.parent, text=choose_label).grid(
+        Label(self.parent, text="Input file (.wav, mono and 44100 sampling rate):").grid(
             row=0, column=0, sticky=W, padx=5, pady=(10, 2)
         )
 
@@ -50,56 +49,46 @@ class StochasticModel_frame:
         ## STOCHASTIC MODEL
 
         # HOP SIZE
-        H_label = "Hop size (H):"
-        Label(self.parent, text=H_label).grid(
+        Label(self.parent, text="Hop size (H):").grid(
             row=2, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.H = Entry(self.parent, justify=CENTER)
-        self.H["width"] = 5
+        self.H = make_entry(self.parent)
         self.H.grid(row=2, column=0, sticky=W, padx=(90, 5), pady=(10, 2))
         self.H.delete(0, END)
         self.H.insert(0, "256")
 
         # FFT size
-        N_label = "FFT size (N):"
-        Label(self.parent, text=N_label).grid(
+        Label(self.parent, text="FFT size (N):").grid(
             row=3, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.N = Entry(self.parent, justify=CENTER)
-        self.N["width"] = 5
+        self.N = make_entry(self.parent)
         self.N.grid(row=3, column=0, sticky=W, padx=(90, 5), pady=(10, 2))
         self.N.delete(0, END)
         self.N.insert(0, "512")
 
         # DECIMATION FACTOR
-        stocf_label = "Decimation factor (bigger than 0, max of 1):"
-        Label(self.parent, text=stocf_label).grid(
+        Label(self.parent, text="Decimation factor (bigger than 0, max of 1):").grid(
             row=4, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.stocf = Entry(self.parent, justify=CENTER)
-        self.stocf["width"] = 5
+        self.stocf = make_entry(self.parent)
         self.stocf.grid(row=4, column=0, sticky=W, padx=(285, 5), pady=(10, 2))
         self.stocf.delete(0, END)
         self.stocf.insert(0, "0.1")
 
         # MEl SCALE
-        melScale_label = "Approximation scale (0: linear, 1: mel):"
-        Label(self.parent, text=melScale_label).grid(
+        Label(self.parent, text="Approximation scale (0: linear, 1: mel):").grid(
             row=5, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.melScale = Entry(self.parent, justify=CENTER)
-        self.melScale["width"] = 5
+        self.melScale = make_entry(self.parent)
         self.melScale.grid(row=5, column=0, sticky=W, padx=(285, 5), pady=(10, 2))
         self.melScale.delete(0, END)
         self.melScale.insert(0, "1")
 
         # NORMALIZATION
-        normalization_label = "Amplitude normalization (0: no, 1: yes):"
-        Label(self.parent, text=normalization_label).grid(
+        Label(self.parent, text="Amplitude normalization (0: no, 1: yes):").grid(
             row=6, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.normalization = Entry(self.parent, justify=CENTER)
-        self.normalization["width"] = 5
+        self.normalization = make_entry(self.parent)
         self.normalization.grid(row=6, column=0, sticky=W, padx=(285, 5), pady=(10, 2))
         self.normalization.delete(0, END)
         self.normalization.insert(0, "1")
@@ -109,8 +98,7 @@ class StochasticModel_frame:
         self.compute.grid(row=7, column=0, padx=5, pady=(10, 2), sticky=W)
 
         # BUTTON TO PLAY OUTPUT
-        output_label = "Stochastic:"
-        Label(self.parent, text=output_label).grid(
+        Label(self.parent, text="Stochastic:").grid(
             row=8, column=0, sticky=W, padx=5, pady=(10, 15)
         )
         self.output = Button(

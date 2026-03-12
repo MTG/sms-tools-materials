@@ -5,7 +5,7 @@ import sys
 from tkinter import *
 from tkinter import messagebox, filedialog
 
-from gui_layout import apply_responsive_grid
+from gui_layout import apply_responsive_grid, make_entry
 import sineModel_function
 from smstools.models import utilFunctions as UF
 
@@ -21,8 +21,7 @@ class SineModel_frame:
 
     def initUI(self):
 
-        choose_label = "Input file (.wav, mono and 44100 sampling rate):"
-        Label(self.parent, text=choose_label).grid(
+        Label(self.parent, text="Input file (.wav, mono and 44100 sampling rate):").grid(
             row=0, column=0, sticky=W, padx=5, pady=(10, 2)
         )
 
@@ -51,8 +50,7 @@ class SineModel_frame:
         ## SINE MODEL
 
         # ANALYSIS WINDOW TYPE
-        wtype_label = "Window type:"
-        Label(self.parent, text=wtype_label).grid(
+        Label(self.parent, text="Window type:").grid(
             row=2, column=0, sticky=W, padx=5, pady=(10, 2)
         )
         self.w_type = StringVar()
@@ -69,80 +67,64 @@ class SineModel_frame:
         window_option.grid(row=2, column=0, sticky=W, padx=(95, 5), pady=(10, 2))
 
         # WINDOW SIZE
-        M_label = "Window size (M):"
-        Label(self.parent, text=M_label).grid(
+        Label(self.parent, text="Window size (M):").grid(
             row=3, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.M = Entry(self.parent, justify=CENTER)
-        self.M["width"] = 5
+        self.M = make_entry(self.parent)
         self.M.grid(row=3, column=0, sticky=W, padx=(115, 5), pady=(10, 2))
         self.M.delete(0, END)
         self.M.insert(0, "2001")
 
         # FFT SIZE
-        N_label = "FFT size (N) (power of two bigger than M):"
-        Label(self.parent, text=N_label).grid(
+        Label(self.parent, text="FFT size (N) (power of two bigger than M):").grid(
             row=4, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.N = Entry(self.parent, justify=CENTER)
-        self.N["width"] = 5
+        self.N = make_entry(self.parent)
         self.N.grid(row=4, column=0, sticky=W, padx=(270, 5), pady=(10, 2))
         self.N.delete(0, END)
         self.N.insert(0, "2048")
 
         # THRESHOLD MAGNITUDE
-        t_label = "Magnitude threshold (t) (in dB):"
-        Label(self.parent, text=t_label).grid(
+        Label(self.parent, text="Magnitude threshold (t) (in dB):").grid(
             row=5, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.t = Entry(self.parent, justify=CENTER)
-        self.t["width"] = 5
+        self.t = make_entry(self.parent)
         self.t.grid(row=5, column=0, sticky=W, padx=(205, 5), pady=(10, 2))
         self.t.delete(0, END)
         self.t.insert(0, "-80")
 
         # MIN DURATION SINUSOIDAL TRACKS
-        minSineDur_label = "Minimum duration of sinusoidal tracks:"
-        Label(self.parent, text=minSineDur_label).grid(
+        Label(self.parent, text="Minimum duration of sinusoidal tracks:").grid(
             row=6, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.minSineDur = Entry(self.parent, justify=CENTER)
-        self.minSineDur["width"] = 5
+        self.minSineDur = make_entry(self.parent)
         self.minSineDur.grid(row=6, column=0, sticky=W, padx=(250, 5), pady=(10, 2))
         self.minSineDur.delete(0, END)
         self.minSineDur.insert(0, "0.02")
 
         # MAX NUMBER PARALLEL SINUSOIDS
-        maxnSines_label = "Maximum number of parallel sinusoids:"
-        Label(self.parent, text=maxnSines_label).grid(
+        Label(self.parent, text="Maximum number of parallel sinusoids:").grid(
             row=7, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.maxnSines = Entry(self.parent, justify=CENTER)
-        self.maxnSines["width"] = 5
+        self.maxnSines = make_entry(self.parent)
         self.maxnSines.grid(row=7, column=0, sticky=W, padx=(250, 5), pady=(10, 2))
         self.maxnSines.delete(0, END)
         self.maxnSines.insert(0, "150")
 
         # FREQUENCY DEVIATION ALLOWED
-        freqDevOffset_label = (
-            "Max frequency deviation in sinusoidal tracks (at freq 0):"
-        )
-        Label(self.parent, text=freqDevOffset_label).grid(
+        Label(self.parent, text="Max frequency deviation in sinusoidal tracks (at freq 0):").grid(
             row=8, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.freqDevOffset = Entry(self.parent, justify=CENTER)
-        self.freqDevOffset["width"] = 5
+        self.freqDevOffset = make_entry(self.parent)
         self.freqDevOffset.grid(row=8, column=0, sticky=W, padx=(350, 5), pady=(10, 2))
         self.freqDevOffset.delete(0, END)
         self.freqDevOffset.insert(0, "10")
 
         # SLOPE OF THE FREQ DEVIATION
-        freqDevSlope_label = "Slope of the frequency deviation (as function of freq):"
-        Label(self.parent, text=freqDevSlope_label).grid(
+        Label(self.parent, text="Slope of the frequency deviation (as function of freq):").grid(
             row=9, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.freqDevSlope = Entry(self.parent, justify=CENTER)
-        self.freqDevSlope["width"] = 5
+        self.freqDevSlope = make_entry(self.parent)
         self.freqDevSlope.grid(row=9, column=0, sticky=W, padx=(340, 5), pady=(10, 2))
         self.freqDevSlope.delete(0, END)
         self.freqDevSlope.insert(0, "0.001")
@@ -152,8 +134,7 @@ class SineModel_frame:
         self.compute.grid(row=10, column=0, padx=5, pady=(10, 2), sticky=W)
 
         # BUTTON TO PLAY OUTPUT
-        output_label = "Output:"
-        Label(self.parent, text=output_label).grid(
+        Label(self.parent, text="Output:").grid(
             row=11, column=0, sticky=W, padx=5, pady=(10, 15)
         )
         self.output = Button(

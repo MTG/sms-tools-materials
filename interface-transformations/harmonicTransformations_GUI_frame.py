@@ -5,7 +5,7 @@ import sys, os
 from tkinter import messagebox
 
 import numpy as np
-from gui_layout import apply_responsive_grid
+from gui_layout import apply_responsive_grid, make_entry, place_entry
 import harmonicTransformations_function as hT
 from smstools.models import utilFunctions as UF
 
@@ -21,8 +21,7 @@ class HarmonicTransformations_frame:
 
     def initUI(self):
 
-        choose_label = "inputFile:"
-        Label(self.parent, text=choose_label).grid(
+        Label(self.parent, text="inputFile:").grid(
             row=0, column=0, sticky=W, padx=5, pady=(10, 2)
         )
 
@@ -51,8 +50,7 @@ class HarmonicTransformations_frame:
         ## HARMONIC TRANSFORMATIONS ANALYSIS
 
         # ANALYSIS WINDOW TYPE
-        wtype_label = "window:"
-        Label(self.parent, text=wtype_label).grid(
+        Label(self.parent, text="window:").grid(
             row=1, column=0, sticky=W, padx=5, pady=(10, 2)
         )
         self.w_type = StringVar()
@@ -69,100 +67,82 @@ class HarmonicTransformations_frame:
         window_option.grid(row=1, column=0, sticky=W, padx=(65, 5), pady=(10, 2))
 
         # WINDOW SIZE
-        M_label = "M:"
-        Label(self.parent, text=M_label).grid(
+        Label(self.parent, text="M:").grid(
             row=1, column=0, sticky=W, padx=(180, 5), pady=(10, 2)
         )
-        self.M = Entry(self.parent, justify=CENTER)
-        self.M["width"] = 5
+        self.M = make_entry(self.parent)
         self.M.grid(row=1, column=0, sticky=W, padx=(200, 5), pady=(10, 2))
         self.M.delete(0, END)
         self.M.insert(0, "1201")
 
         # FFT SIZE
-        N_label = "N:"
-        Label(self.parent, text=N_label).grid(
+        Label(self.parent, text="N:").grid(
             row=1, column=0, sticky=W, padx=(255, 5), pady=(10, 2)
         )
-        self.N = Entry(self.parent, justify=CENTER)
-        self.N["width"] = 5
+        self.N = make_entry(self.parent)
         self.N.grid(row=1, column=0, sticky=W, padx=(275, 5), pady=(10, 2))
         self.N.delete(0, END)
         self.N.insert(0, "2048")
 
         # THRESHOLD MAGNITUDE
-        t_label = "t:"
-        Label(self.parent, text=t_label).grid(
+        Label(self.parent, text="t:").grid(
             row=1, column=0, sticky=W, padx=(330, 5), pady=(10, 2)
         )
-        self.t = Entry(self.parent, justify=CENTER)
-        self.t["width"] = 5
+        self.t = make_entry(self.parent)
         self.t.grid(row=1, column=0, sticky=W, padx=(348, 5), pady=(10, 2))
         self.t.delete(0, END)
         self.t.insert(0, "-90")
 
         # MIN DURATION SINUSOIDAL TRACKS
-        minSineDur_label = "minSineDur:"
-        Label(self.parent, text=minSineDur_label).grid(
+        Label(self.parent, text="minSineDur:").grid(
             row=2, column=0, sticky=W, padx=(5, 5), pady=(10, 2)
         )
-        self.minSineDur = Entry(self.parent, justify=CENTER)
-        self.minSineDur["width"] = 5
+        self.minSineDur = make_entry(self.parent)
         self.minSineDur.grid(row=2, column=0, sticky=W, padx=(87, 5), pady=(10, 2))
         self.minSineDur.delete(0, END)
         self.minSineDur.insert(0, "0.1")
 
         # MAX NUMBER OF HARMONICS
-        nH_label = "nH:"
-        Label(self.parent, text=nH_label).grid(
+        Label(self.parent, text="nH:").grid(
             row=2, column=0, sticky=W, padx=(145, 5), pady=(10, 2)
         )
-        self.nH = Entry(self.parent, justify=CENTER)
-        self.nH["width"] = 5
+        self.nH = make_entry(self.parent)
         self.nH.grid(row=2, column=0, sticky=W, padx=(172, 5), pady=(10, 2))
         self.nH.delete(0, END)
         self.nH.insert(0, "100")
 
         # MIN FUNDAMENTAL FREQUENCY
-        minf0_label = "minf0:"
-        Label(self.parent, text=minf0_label).grid(
+        Label(self.parent, text="minf0:").grid(
             row=2, column=0, sticky=W, padx=(227, 5), pady=(10, 2)
         )
-        self.minf0 = Entry(self.parent, justify=CENTER)
-        self.minf0["width"] = 5
+        self.minf0 = make_entry(self.parent)
         self.minf0.grid(row=2, column=0, sticky=W, padx=(275, 5), pady=(10, 2))
         self.minf0.delete(0, END)
         self.minf0.insert(0, "130")
 
         # MAX FUNDAMENTAL FREQUENCY
-        maxf0_label = "maxf0:"
-        Label(self.parent, text=maxf0_label).grid(
+        Label(self.parent, text="maxf0:").grid(
             row=2, column=0, sticky=W, padx=(330, 5), pady=(10, 2)
         )
-        self.maxf0 = Entry(self.parent, justify=CENTER)
-        self.maxf0["width"] = 5
+        self.maxf0 = make_entry(self.parent)
         self.maxf0.grid(row=2, column=0, sticky=W, padx=(380, 5), pady=(10, 2))
         self.maxf0.delete(0, END)
         self.maxf0.insert(0, "300")
 
         # MAX ERROR ACCEPTED
-        f0et_label = "f0et:"
-        Label(self.parent, text=f0et_label).grid(
+        Label(self.parent, text="f0et:").grid(
             row=3, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.f0et = Entry(self.parent, justify=CENTER)
-        self.f0et["width"] = 3
+        self.f0et = make_entry(self.parent, 3)
         self.f0et.grid(row=3, column=0, sticky=W, padx=(42, 5), pady=(10, 2))
         self.f0et.delete(0, END)
         self.f0et.insert(0, "7")
 
         # ALLOWED DEVIATION OF HARMONIC TRACKS
-        harmDevSlope_label = "harmDevSlope:"
-        Label(self.parent, text=harmDevSlope_label).grid(
+        Label(self.parent, text="harmDevSlope:").grid(
             row=3, column=0, sticky=W, padx=(90, 5), pady=(10, 2)
         )
-        self.harmDevSlope = Entry(self.parent, justify=CENTER)
-        self.harmDevSlope["width"] = 5
+        self.harmDevSlope = make_entry(self.parent)
         self.harmDevSlope.grid(row=3, column=0, sticky=W, padx=(190, 5), pady=(10, 2))
         self.harmDevSlope.delete(0, END)
         self.harmDevSlope.insert(0, "0.01")
@@ -193,36 +173,25 @@ class HarmonicTransformations_frame:
         ###
 
         # FREQUENCY SCALING FACTORS
-        freqScaling_label = "Frequency scaling factors (time, value pairs):"
-        Label(self.parent, text=freqScaling_label).grid(
+        Label(self.parent, text="Frequency scaling factors (time, value pairs):").grid(
             row=6, column=0, sticky=W, padx=5, pady=(5, 2)
         )
-        self.freqScaling = Entry(self.parent, justify=CENTER)
-        self.freqScaling["width"] = 35
-        self.freqScaling.grid(row=7, column=0, sticky=W + E, padx=5, pady=(0, 2))
-        self.freqScaling.delete(0, END)
-        self.freqScaling.insert(0, "[0, 2.0, 1, 0.3]")
+        self.freqScaling = place_entry(self.parent, row=7, padx=5, default="[0, 2.0, 1, 0.3]", width=35, sticky="we", pady=(0, 2))
 
         # FREQUENCY STRETCHING FACTORSharmonicModelTransformation
-        freqStretching_label = "Frequency stretching factors (time, value pairs):"
-        Label(self.parent, text=freqStretching_label).grid(
+        Label(self.parent, text="Frequency stretching factors (time, value pairs):").grid(
             row=8, column=0, sticky=W, padx=5, pady=(5, 2)
         )
-        self.freqStretching = Entry(self.parent, justify=CENTER)
-        self.freqStretching["width"] = 35
-        self.freqStretching.grid(row=9, column=0, sticky=W + E, padx=5, pady=(0, 2))
-        self.freqStretching.delete(0, END)
-        self.freqStretching.insert(0, "[0, 1, 1, 1.5]")
+        self.freqStretching = place_entry(self.parent, row=9, padx=5, default="[0, 1, 1, 1.5]", width=35, sticky="we", pady=(0, 2))
 
         # TIMBRE PRESERVATION
-        timbrePreservation_label = (
-            "Timbre preservation (1 preserves original timbre, 0 it does not):"
-        )
-        Label(self.parent, text=timbrePreservation_label).grid(
+        Label(
+            self.parent,
+            text="Timbre preservation (1 preserves original timbre, 0 it does not):",
+        ).grid(
             row=10, column=0, sticky=W, padx=5, pady=(5, 2)
         )
-        self.timbrePreservation = Entry(self.parent, justify=CENTER)
-        self.timbrePreservation["width"] = 2
+        self.timbrePreservation = make_entry(self.parent, 2)
         self.timbrePreservation.grid(
             row=10, column=0, sticky=W + E, padx=(395, 5), pady=(5, 2)
         )
@@ -230,15 +199,10 @@ class HarmonicTransformations_frame:
         self.timbrePreservation.insert(0, "1")
 
         # TIME SCALING FACTORS
-        timeScaling_label = "Time scaling factors (time, value pairs):"
-        Label(self.parent, text=timeScaling_label).grid(
+        Label(self.parent, text="Time scaling factors (time, value pairs):").grid(
             row=11, column=0, sticky=W, padx=5, pady=(5, 2)
         )
-        self.timeScaling = Entry(self.parent, justify=CENTER)
-        self.timeScaling["width"] = 35
-        self.timeScaling.grid(row=12, column=0, sticky=W + E, padx=5, pady=(0, 2))
-        self.timeScaling.delete(0, END)
-        self.timeScaling.insert(0, "[0, 0, 0.671, 0.671, 1.978, 1.978+1.0]")
+        self.timeScaling = place_entry(self.parent, row=12, padx=5, default="[0, 0, 0.671, 0.671, 1.978, 1.978+1.0]", width=35, sticky="we", pady=(0, 2))
 
         # BUTTON TO DO THE SYNTHESIS
         self.compute = Button(

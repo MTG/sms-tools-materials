@@ -1,24 +1,39 @@
-from tkinter import Entry, Frame, Menubutton
+from tkinter import CENTER, END, Entry, Frame, Label, Menubutton, W
+
+
+def add_window_size_label(parent, row=3):
+    """Place a standard 'Window size (M):' label at the given grid row."""
+    Label(parent, text="Window size (M):").grid(
+        row=row, column=0, sticky=W, padx=5, pady=(10, 2)
+    )
+
+
+def make_entry(parent, width=5):
+    """Create a centered Entry widget with the given width."""
+    entry = Entry(parent, justify=CENTER)
+    entry["width"] = width
+    return entry
+
+
+def place_entry(parent, row, padx, default, width=5, sticky="w", pady=(10, 2)):
+    """Create, position, and initialize a centered Entry widget in one call."""
+    entry = make_entry(parent, width)
+    entry.grid(row=row, column=0, sticky=sticky, padx=padx, pady=pady)
+    entry.delete(0, END)
+    entry.insert(0, str(default))
+    return entry
 
 
 def _normalize_padding(padding):
+    if isinstance(padding, str):
+        padding = padding.split()
     if isinstance(padding, (tuple, list)):
-        if len(padding) == 0:
+        if not padding:
             return (0, 0)
         if len(padding) == 1:
             value = int(padding[0])
             return (value, value)
         return (int(padding[0]), int(padding[1]))
-
-    if isinstance(padding, str):
-        parts = padding.split()
-        if len(parts) == 0:
-            return (0, 0)
-        if len(parts) == 1:
-            value = int(parts[0])
-            return (value, value)
-        return (int(parts[0]), int(parts[1]))
-
     value = int(padding) if padding else 0
     return (value, value)
 

@@ -5,7 +5,7 @@ import sys
 from tkinter import *
 from tkinter import filedialog, messagebox
 
-from gui_layout import apply_responsive_grid
+from gui_layout import apply_responsive_grid, make_entry
 import stftMorph_function as sT
 from smstools.models import utilFunctions as UF
 
@@ -22,8 +22,7 @@ class StftMorph_frame:
     def initUI(self):
 
         ## INPUT FILE 1
-        choose1_label = "inputFile1:"
-        Label(self.parent, text=choose1_label).grid(
+        Label(self.parent, text="inputFile1:").grid(
             row=0, column=0, sticky=W, padx=5, pady=(10, 2)
         )
 
@@ -50,8 +49,7 @@ class StftMorph_frame:
         preview1.grid(row=0, column=0, sticky=W, padx=(375, 6), pady=(10, 2))
 
         # ANALYSIS WINDOW TYPE SOUND 1
-        wtype1_label = "window1:"
-        Label(self.parent, text=wtype1_label).grid(
+        Label(self.parent, text="window1:").grid(
             row=1, column=0, sticky=W, padx=5, pady=(4, 2)
         )
         self.w1_type = StringVar()
@@ -68,34 +66,28 @@ class StftMorph_frame:
         window1_option.grid(row=1, column=0, sticky=W, padx=(68, 5), pady=(4, 2))
 
         # WINDOW SIZE SOUND 1
-        M1_label = "M1:"
-        Label(self.parent, text=M1_label).grid(
+        Label(self.parent, text="M1:").grid(
             row=1, column=0, sticky=W, padx=(180, 5), pady=(4, 2)
         )
-        self.M1 = Entry(self.parent, justify=CENTER)
-        self.M1["width"] = 5
+        self.M1 = make_entry(self.parent)
         self.M1.grid(row=1, column=0, sticky=W, padx=(208, 5), pady=(4, 2))
         self.M1.delete(0, END)
         self.M1.insert(0, "1024")
 
         # FFT SIZE SOUND 1
-        N1_label = "N1:"
-        Label(self.parent, text=N1_label).grid(
+        Label(self.parent, text="N1:").grid(
             row=1, column=0, sticky=W, padx=(265, 5), pady=(4, 2)
         )
-        self.N1 = Entry(self.parent, justify=CENTER)
-        self.N1["width"] = 5
+        self.N1 = make_entry(self.parent)
         self.N1.grid(row=1, column=0, sticky=W, padx=(290, 5), pady=(4, 2))
         self.N1.delete(0, END)
         self.N1.insert(0, "1024")
 
         # HOP SIZE SOUND 1
-        H1_label = "H1:"
-        Label(self.parent, text=H1_label).grid(
+        Label(self.parent, text="H1:").grid(
             row=1, column=0, sticky=W, padx=(343, 5), pady=(4, 2)
         )
-        self.H1 = Entry(self.parent, justify=CENTER)
-        self.H1["width"] = 5
+        self.H1 = make_entry(self.parent)
         self.H1.grid(row=1, column=0, sticky=W, padx=(370, 5), pady=(4, 2))
         self.H1.delete(0, END)
         self.H1.insert(0, "256")
@@ -108,8 +100,7 @@ class StftMorph_frame:
         ###
 
         ## INPUT FILE 2
-        choose2_label = "inputFile2:"
-        Label(self.parent, text=choose2_label).grid(
+        Label(self.parent, text="inputFile2:").grid(
             row=3, column=0, sticky=W, padx=5, pady=(2, 2)
         )
 
@@ -136,8 +127,7 @@ class StftMorph_frame:
         preview2.grid(row=3, column=0, sticky=W, padx=(375, 6), pady=(2, 2))
 
         # ANALYSIS WINDOW TYPE SOUND 2
-        wtype2_label = "window2:"
-        Label(self.parent, text=wtype2_label).grid(
+        Label(self.parent, text="window2:").grid(
             row=4, column=0, sticky=W, padx=5, pady=(4, 2)
         )
         self.w2_type = StringVar()
@@ -154,23 +144,19 @@ class StftMorph_frame:
         window2_option.grid(row=4, column=0, sticky=W, padx=(68, 5), pady=(4, 2))
 
         # WINDOW SIZE SOUND 2
-        M2_label = "M2:"
-        Label(self.parent, text=M2_label).grid(
+        Label(self.parent, text="M2:").grid(
             row=4, column=0, sticky=W, padx=(180, 5), pady=(4, 2)
         )
-        self.M2 = Entry(self.parent, justify=CENTER)
-        self.M2["width"] = 5
+        self.M2 = make_entry(self.parent)
         self.M2.grid(row=4, column=0, sticky=W, padx=(208, 5), pady=(4, 2))
         self.M2.delete(0, END)
         self.M2.insert(0, "1024")
 
         # FFT SIZE SOUND 2
-        N2_label = "N2:"
-        Label(self.parent, text=N2_label).grid(
+        Label(self.parent, text="N2:").grid(
             row=4, column=0, sticky=W, padx=(265, 5), pady=(4, 2)
         )
-        self.N2 = Entry(self.parent, justify=CENTER)
-        self.N2["width"] = 5
+        self.N2 = make_entry(self.parent)
         self.N2.grid(row=4, column=0, sticky=W, padx=(290, 5), pady=(4, 2))
         self.N2.delete(0, END)
         self.N2.insert(0, "1024")
@@ -183,31 +169,28 @@ class StftMorph_frame:
         ###
 
         # SMOOTHING FACTOR
-        smoothf_label1 = (
-            "Smooth factor of sound 2 (bigger than 0 to max of 1, where 1 is no"
-        )
-        Label(self.parent, text=smoothf_label1).grid(
+        Label(
+            self.parent,
+            text="Smooth factor of sound 2 (bigger than 0 to max of 1, where 1 is no",
+        ).grid(
             row=6, column=0, sticky=W, padx=(5, 5), pady=(2, 2)
         )
-        smoothf_label2 = "smothing):"
-        Label(self.parent, text=smoothf_label2).grid(
+        Label(self.parent, text="smothing):").grid(
             row=7, column=0, sticky=W, padx=(5, 5), pady=(0, 2)
         )
-        self.smoothf = Entry(self.parent, justify=CENTER)
-        self.smoothf["width"] = 5
+        self.smoothf = make_entry(self.parent)
         self.smoothf.grid(row=8, column=0, sticky=W, padx=(5, 5), pady=(2, 2))
         self.smoothf.delete(0, END)
         self.smoothf.insert(0, "0.5")
 
         # BALANCE FACTOR
-        balancef_label = (
-            "Balance factor (from 0 to 1, where 0 is sound 1 and 1 is sound 2):"
-        )
-        Label(self.parent, text=balancef_label).grid(
+        Label(
+            self.parent,
+            text="Balance factor (from 0 to 1, where 0 is sound 1 and 1 is sound 2):",
+        ).grid(
             row=9, column=0, sticky=W, padx=(5, 5), pady=(10, 2)
         )
-        self.balancef = Entry(self.parent, justify=CENTER)
-        self.balancef["width"] = 5
+        self.balancef = make_entry(self.parent)
         self.balancef.grid(row=10, column=0, sticky=W, padx=(5, 5), pady=(2, 2))
         self.balancef.delete(0, END)
         self.balancef.insert(0, "0.2")

@@ -3,7 +3,7 @@ import os
 from tkinter import filedialog, messagebox
 
 import dftModel_function
-from gui_layout import apply_responsive_grid
+from gui_layout import apply_responsive_grid, add_window_size_label, make_entry
 from smstools.models import utilFunctions as UF
 from tkinter import *
 
@@ -20,8 +20,7 @@ class DftModel_frame:
 
     def initUI(self):
 
-        choose_label = "Input file (.wav, mono and 44100 sampling rate):"
-        Label(self.parent, text=choose_label).grid(
+        Label(self.parent, text="Input file (.wav, mono and 44100 sampling rate):").grid(
             row=0, column=0, sticky=W, padx=5, pady=(10, 2)
         )
 
@@ -51,8 +50,7 @@ class DftModel_frame:
         ## DFT MODEL
 
         # ANALYSIS WINDOW TYPE
-        wtype_label = "Window type:"
-        Label(self.parent, text=wtype_label).grid(
+        Label(self.parent, text="Window type:").grid(
             row=2, column=0, sticky=W, padx=5, pady=(10, 2)
         )
         self.w_type = StringVar()
@@ -69,34 +67,26 @@ class DftModel_frame:
         window_option.grid(row=2, column=0, sticky=W, padx=(95, 5), pady=(10, 2))
 
         # WINDOW SIZE
-        M_label = "Window size (M):"
-        Label(self.parent, text=M_label).grid(
-            row=3, column=0, sticky=W, padx=5, pady=(10, 2)
-        )
-        self.M = Entry(self.parent, justify=CENTER)
-        self.M["width"] = 5
+        add_window_size_label(self.parent)
+        self.M = make_entry(self.parent)
         self.M.grid(row=3, column=0, sticky=W, padx=(115, 5), pady=(10, 2))
         self.M.delete(0, END)
         self.M.insert(0, "511")
 
         # FFT SIZE
-        N_label = "FFT size (N) (power of two bigger than M):"
-        Label(self.parent, text=N_label).grid(
+        Label(self.parent, text="FFT size (N) (power of two bigger than M):").grid(
             row=4, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.N = Entry(self.parent, justify=CENTER)
-        self.N["width"] = 5
+        self.N = make_entry(self.parent)
         self.N.grid(row=4, column=0, sticky=W, padx=(270, 5), pady=(10, 2))
         self.N.delete(0, END)
         self.N.insert(0, "1024")
 
         # TIME TO START ANALYSIS
-        time_label = "Time in sound (in seconds):"
-        Label(self.parent, text=time_label).grid(
+        Label(self.parent, text="Time in sound (in seconds):").grid(
             row=5, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.time = Entry(self.parent, justify=CENTER)
-        self.time["width"] = 5
+        self.time = make_entry(self.parent)
         self.time.grid(row=5, column=0, sticky=W, padx=(180, 5), pady=(10, 2))
         self.time.delete(0, END)
         self.time.insert(0, ".2")

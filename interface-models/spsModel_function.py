@@ -26,6 +26,18 @@ def _mask_frequencies(freq, maxfreq):
     return masked
 
 
+def _plot_sine_overlay(tfreq, maxplotfreq, H, fs, title="sinusoidal + stochastic spectrogram"):
+    """Overlay sinusoidal frequency tracks on the current matplotlib subplot."""
+    if tfreq.shape[1] > 0:
+        sines = _mask_frequencies(tfreq, maxplotfreq)
+        frmTime = H * np.arange(int(sines[:, 0].size)) / float(fs)
+        plt.plot(frmTime, sines, color="k", ms=3, alpha=1)
+        plt.xlabel("time(s)")
+        plt.ylabel("Frequency(Hz)")
+        plt.autoscale(tight=True)
+        plt.title(title)
+
+
 def main(
     inputFile=os.path.join(_sounds_dir, "bendir.wav"),
     window="hamming",
@@ -103,15 +115,7 @@ def main(
     plt.autoscale(tight=True)
 
     # plot sinusoidal frequencies on top of stochastic component
-    if tfreq.shape[1] > 0:
-        sines = _mask_frequencies(tfreq, maxplotfreq)
-        numFrames = int(sines[:, 0].size)
-        frmTime = H * np.arange(numFrames) / float(fs)
-        plt.plot(frmTime, sines, color="k", ms=3, alpha=1)
-        plt.xlabel("time(s)")
-        plt.ylabel("Frequency(Hz)")
-        plt.autoscale(tight=True)
-        plt.title("sinusoidal + stochastic spectrogram")
+    _plot_sine_overlay(tfreq, maxplotfreq, H, fs)
 
     # plot the output sound
     plt.subplot(3, 1, 3)

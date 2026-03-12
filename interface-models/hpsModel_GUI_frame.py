@@ -26,8 +26,7 @@ class HpsModel_frame:
         self.parent.grid_columnconfigure(2, weight=0)
         self.parent.grid_columnconfigure(3, weight=1)
 
-        choose_label = "Input file (.wav, mono and 44100 sampling rate):"
-        Label(self.parent, text=choose_label).grid(
+        Label(self.parent, text="Input file (.wav, mono and 44100 sampling rate):").grid(
             row=0, column=0, columnspan=4, sticky=W, padx=5, pady=(10, 2)
         )
 

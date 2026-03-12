@@ -6,7 +6,7 @@ from tkinter import *  # notice lowercase 't' in tkinter here
 from tkinter import messagebox, filedialog
 
 import numpy as np
-from gui_layout import apply_responsive_grid
+from gui_layout import apply_responsive_grid, make_entry, place_entry
 import stochasticTransformations_function as sT
 from smstools.models import utilFunctions as UF
 
@@ -22,8 +22,7 @@ class StochasticTransformations_frame:
 
     def initUI(self):
 
-        choose_label = "inputFile:"
-        Label(self.parent, text=choose_label).grid(
+        Label(self.parent, text="inputFile:").grid(
             row=0, column=0, sticky=W, padx=5, pady=(10, 2)
         )
 
@@ -52,26 +51,19 @@ class StochasticTransformations_frame:
         ## STOCHASTIC TRANSFORMATIONS ANALYSIS
 
         # DECIMATION FACTOR
-        stocf_label = "stocf:"
-        Label(self.parent, text=stocf_label).grid(
+        Label(self.parent, text="stocf:").grid(
             row=1, column=0, sticky=W, padx=(5, 5), pady=(10, 2)
         )
-        self.stocf = Entry(self.parent, justify=CENTER)
-        self.stocf["width"] = 5
+        self.stocf = make_entry(self.parent)
         self.stocf.grid(row=1, column=0, sticky=W, padx=(47, 5), pady=(10, 2))
         self.stocf.delete(0, END)
         self.stocf.insert(0, "0.1")
 
         # TIME SCALING FACTORS
-        timeScaling_label = "Time scaling factors (time, value pairs):"
-        Label(self.parent, text=timeScaling_label).grid(
+        Label(self.parent, text="Time scaling factors (time, value pairs):").grid(
             row=2, column=0, sticky=W, padx=5, pady=(5, 2)
         )
-        self.timeScaling = Entry(self.parent, justify=CENTER)
-        self.timeScaling["width"] = 35
-        self.timeScaling.grid(row=3, column=0, sticky=W + E, padx=5, pady=(0, 2))
-        self.timeScaling.delete(0, END)
-        self.timeScaling.insert(0, "[0, 0, 1, 2]")
+        self.timeScaling = place_entry(self.parent, row=3, padx=5, default="[0, 0, 1, 2]", width=35, sticky="we", pady=(0, 2))
 
         # BUTTON TO DO THE SYNTHESIS
         self.compute = Button(

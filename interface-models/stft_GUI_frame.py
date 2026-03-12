@@ -4,7 +4,7 @@ from tkinter import *
 import sys, os
 from tkinter import messagebox, filedialog
 
-from gui_layout import apply_responsive_grid
+from gui_layout import apply_responsive_grid, add_window_size_label, place_entry
 import stft_function
 from smstools.models import utilFunctions as UF
 
@@ -19,8 +19,7 @@ class Stft_frame:
 
     def initUI(self):
 
-        choose_label = "Input file (.wav, mono and 44100 sampling rate):"
-        Label(self.parent, text=choose_label).grid(
+        Label(self.parent, text="Input file (.wav, mono and 44100 sampling rate):").grid(
             row=0, column=0, sticky=W, padx=5, pady=(10, 2)
         )
 
@@ -49,8 +48,7 @@ class Stft_frame:
         ## STFT
 
         # ANALYSIS WINDOW TYPE
-        wtype_label = "Window type:"
-        Label(self.parent, text=wtype_label).grid(
+        Label(self.parent, text="Window type:").grid(
             row=2, column=0, sticky=W, padx=5, pady=(10, 2)
         )
         self.w_type = StringVar()
@@ -67,45 +65,27 @@ class Stft_frame:
         window_option.grid(row=2, column=0, sticky=W, padx=(95, 5), pady=(10, 2))
 
         # WINDOW SIZE
-        M_label = "Window size (M):"
-        Label(self.parent, text=M_label).grid(
-            row=3, column=0, sticky=W, padx=5, pady=(10, 2)
-        )
-        self.M = Entry(self.parent, justify=CENTER)
-        self.M["width"] = 5
-        self.M.grid(row=3, column=0, sticky=W, padx=(115, 5), pady=(10, 2))
-        self.M.delete(0, END)
-        self.M.insert(0, "1024")
+        add_window_size_label(self.parent)
+        self.M = place_entry(self.parent, row=3, padx=(115, 5), default="1024")
 
         # FFT SIZE
-        N_label = "FFT size (N) (power of two bigger than M):"
-        Label(self.parent, text=N_label).grid(
+        Label(self.parent, text="FFT size (N) (power of two bigger than M):").grid(
             row=4, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.N = Entry(self.parent, justify=CENTER)
-        self.N["width"] = 5
-        self.N.grid(row=4, column=0, sticky=W, padx=(270, 5), pady=(10, 2))
-        self.N.delete(0, END)
-        self.N.insert(0, "1024")
+        self.N = place_entry(self.parent, row=4, padx=(270, 5), default="1024")
 
         # HOP SIZE
-        H_label = "Hop size (H):"
-        Label(self.parent, text=H_label).grid(
+        Label(self.parent, text="Hop size (H):").grid(
             row=5, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.H = Entry(self.parent, justify=CENTER)
-        self.H["width"] = 5
-        self.H.grid(row=5, column=0, sticky=W, padx=(95, 5), pady=(10, 2))
-        self.H.delete(0, END)
-        self.H.insert(0, "512")
+        self.H = place_entry(self.parent, row=5, padx=(95, 5), default="512")
 
         # BUTTON TO COMPUTE EVERYTHING
         self.compute = Button(self.parent, text="Compute", command=self.compute_model)
         self.compute.grid(row=6, column=0, padx=5, pady=(10, 2), sticky=W)
 
         # BUTTON TO PLAY OUTPUT
-        output_label = "Output:"
-        Label(self.parent, text=output_label).grid(
+        Label(self.parent, text="Output:").grid(
             row=7, column=0, sticky=W, padx=5, pady=(10, 15)
         )
         self.output = Button(

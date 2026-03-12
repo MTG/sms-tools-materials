@@ -4,7 +4,7 @@ from tkinter import *
 import os
 from tkinter import messagebox, filedialog
 
-from gui_layout import apply_responsive_grid
+from gui_layout import apply_responsive_grid, make_entry
 import harmonicModel_function
 from smstools.models import utilFunctions as UF
 
@@ -21,8 +21,7 @@ class HarmonicModel_frame:
 
     def initUI(self):
 
-        choose_label = "Input file (.wav, mono and 44100 sampling rate):"
-        Label(self.parent, text=choose_label).grid(
+        Label(self.parent, text="Input file (.wav, mono and 44100 sampling rate):").grid(
             row=0, column=0, sticky=W, padx=5, pady=(10, 2)
         )
 
@@ -51,8 +50,7 @@ class HarmonicModel_frame:
         ## HARMONIC MODEL
 
         # ANALYSIS WINDOW TYPE
-        wtype_label = "Window type:"
-        Label(self.parent, text=wtype_label).grid(
+        Label(self.parent, text="Window type:").grid(
             row=2, column=0, sticky=W, padx=5, pady=(10, 2)
         )
         self.w_type = StringVar()
@@ -69,100 +67,82 @@ class HarmonicModel_frame:
         window_option.grid(row=2, column=0, sticky=W, padx=(95, 5), pady=(10, 2))
 
         # WINDOW SIZE
-        M_label = "Window size (M):"
-        Label(self.parent, text=M_label).grid(
+        Label(self.parent, text="Window size (M):").grid(
             row=3, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.M = Entry(self.parent, justify=CENTER)
-        self.M["width"] = 5
+        self.M = make_entry(self.parent)
         self.M.grid(row=3, column=0, sticky=W, padx=(115, 5), pady=(10, 2))
         self.M.delete(0, END)
         self.M.insert(0, "1201")
 
         # FFT SIZE
-        N_label = "FFT size (N) (power of two bigger than M):"
-        Label(self.parent, text=N_label).grid(
+        Label(self.parent, text="FFT size (N) (power of two bigger than M):").grid(
             row=4, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.N = Entry(self.parent, justify=CENTER)
-        self.N["width"] = 5
+        self.N = make_entry(self.parent)
         self.N.grid(row=4, column=0, sticky=W, padx=(270, 5), pady=(10, 2))
         self.N.delete(0, END)
         self.N.insert(0, "2048")
 
         # THRESHOLD MAGNITUDE
-        t_label = "Magnitude threshold (t) (in dB):"
-        Label(self.parent, text=t_label).grid(
+        Label(self.parent, text="Magnitude threshold (t) (in dB):").grid(
             row=5, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.t = Entry(self.parent, justify=CENTER)
-        self.t["width"] = 5
+        self.t = make_entry(self.parent)
         self.t.grid(row=5, column=0, sticky=W, padx=(205, 5), pady=(10, 2))
         self.t.delete(0, END)
         self.t.insert(0, "-90")
 
         # MIN DURATION SINUSOIDAL TRACKS
-        minSineDur_label = "Minimum duration of harmonic tracks:"
-        Label(self.parent, text=minSineDur_label).grid(
+        Label(self.parent, text="Minimum duration of harmonic tracks:").grid(
             row=6, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.minSineDur = Entry(self.parent, justify=CENTER)
-        self.minSineDur["width"] = 5
+        self.minSineDur = make_entry(self.parent)
         self.minSineDur.grid(row=6, column=0, sticky=W, padx=(250, 5), pady=(10, 2))
         self.minSineDur.delete(0, END)
         self.minSineDur.insert(0, "0.1")
 
         # MAX NUMBER OF HARMONICS
-        nH_label = "Maximum number of harmonics:"
-        Label(self.parent, text=nH_label).grid(
+        Label(self.parent, text="Maximum number of harmonics:").grid(
             row=7, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.nH = Entry(self.parent, justify=CENTER)
-        self.nH["width"] = 5
+        self.nH = make_entry(self.parent)
         self.nH.grid(row=7, column=0, sticky=W, padx=(210, 5), pady=(10, 2))
         self.nH.delete(0, END)
         self.nH.insert(0, "100")
 
         # MIN FUNDAMENTAL FREQUENCY
-        minf0_label = "Minimum fundamental frequency:"
-        Label(self.parent, text=minf0_label).grid(
+        Label(self.parent, text="Minimum fundamental frequency:").grid(
             row=8, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.minf0 = Entry(self.parent, justify=CENTER)
-        self.minf0["width"] = 5
+        self.minf0 = make_entry(self.parent)
         self.minf0.grid(row=8, column=0, sticky=W, padx=(220, 5), pady=(10, 2))
         self.minf0.delete(0, END)
         self.minf0.insert(0, "130")
 
         # MAX FUNDAMENTAL FREQUENCY
-        maxf0_label = "Maximum fundamental frequency:"
-        Label(self.parent, text=maxf0_label).grid(
+        Label(self.parent, text="Maximum fundamental frequency:").grid(
             row=9, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.maxf0 = Entry(self.parent, justify=CENTER)
-        self.maxf0["width"] = 5
+        self.maxf0 = make_entry(self.parent)
         self.maxf0.grid(row=9, column=0, sticky=W, padx=(220, 5), pady=(10, 2))
         self.maxf0.delete(0, END)
         self.maxf0.insert(0, "300")
 
         # MAX ERROR ACCEPTED
-        f0et_label = "Maximum error in f0 detection algorithm:"
-        Label(self.parent, text=f0et_label).grid(
+        Label(self.parent, text="Maximum error in f0 detection algorithm:").grid(
             row=10, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.f0et = Entry(self.parent, justify=CENTER)
-        self.f0et["width"] = 5
+        self.f0et = make_entry(self.parent)
         self.f0et.grid(row=10, column=0, sticky=W, padx=(265, 5), pady=(10, 2))
         self.f0et.delete(0, END)
         self.f0et.insert(0, "7")
 
         # ALLOWED DEVIATION OF HARMONIC TRACKS
-        harmDevSlope_label = "Max frequency deviation in harmonic tracks:"
-        Label(self.parent, text=harmDevSlope_label).grid(
+        Label(self.parent, text="Max frequency deviation in harmonic tracks:").grid(
             row=11, column=0, sticky=W, padx=5, pady=(10, 2)
         )
-        self.harmDevSlope = Entry(self.parent, justify=CENTER)
-        self.harmDevSlope["width"] = 5
+        self.harmDevSlope = make_entry(self.parent)
         self.harmDevSlope.grid(row=11, column=0, sticky=W, padx=(285, 5), pady=(10, 2))
         self.harmDevSlope.delete(0, END)
         self.harmDevSlope.insert(0, "0.01")
@@ -172,8 +152,7 @@ class HarmonicModel_frame:
         self.compute.grid(row=12, column=0, padx=5, pady=(10, 2), sticky=W)
 
         # BUTTON TO PLAY OUTPUT
-        output_label = "Output:"
-        Label(self.parent, text=output_label).grid(
+        Label(self.parent, text="Output:").grid(
             row=13, column=0, sticky=W, padx=5, pady=(10, 15)
         )
         self.output = Button(
