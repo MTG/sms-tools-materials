@@ -172,6 +172,8 @@ Additional Notes
 License
 -------
 
+See [LICENSE](LICENSE) for the repository-wide licensing summary.
+
 All software is distributed under the **GNU Affero GPL v3**:
 
 - <http://www.gnu.org/licenses/agpl-3.0.en.html>
