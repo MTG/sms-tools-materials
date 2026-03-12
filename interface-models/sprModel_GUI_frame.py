@@ -4,6 +4,7 @@ from tkinter import *
 import sys, os
 from tkinter import messagebox, filedialog
 
+from gui_layout import apply_responsive_grid
 import sprModel_function
 from smstools.models import utilFunctions as UF
 
@@ -203,6 +204,8 @@ class SprModel_frame:
         options["filetypes"] = [("All files", ".*"), ("Wav files", ".wav")]
         options["initialdir"] = self.sounds_dir
         options["title"] = "Open a mono audio file .wav with sample frequency 44100 Hz"
+
+        apply_responsive_grid(self.parent)
 
     def browse_file(self):
 

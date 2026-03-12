@@ -4,6 +4,7 @@ from tkinter import *
 import os
 from tkinter import messagebox, filedialog
 
+from gui_layout import apply_responsive_grid
 import harmonicModel_function
 from smstools.models import utilFunctions as UF
 
@@ -192,6 +193,8 @@ class HarmonicModel_frame:
         options["filetypes"] = [("All files", ".*"), ("Wav files", ".wav")]
         options["initialdir"] = self.sounds_dir
         options["title"] = "Open a mono audio file .wav with sample frequency 44100 Hz"
+
+        apply_responsive_grid(self.parent)
 
     def browse_file(self):
 
