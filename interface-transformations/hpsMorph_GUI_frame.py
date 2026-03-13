@@ -254,7 +254,7 @@ class HpsMorph_frame:
         self.compute = Button(self.parent, text="Analysis", command=self.analysis)
         self.compute.grid(row=row_num, column=0, columnspan=2, sticky=W, padx=5, pady=(10, 5))
 
-        self.compute_synth = Button(self.parent, text="Apply Transformation", command=self.transformation_synthesis)
+        self.compute_synth = Button(self.parent, text="Apply Transformation", command=self.transformation_synthesis, font=("TkDefaultFont", 11, "bold"), padx=10, pady=4)
         self.compute_synth.grid(row=row_num, column=2, columnspan=2, sticky=W, padx=5, pady=(10, 5))
 
         row_num += 1
@@ -262,7 +262,7 @@ class HpsMorph_frame:
         self.transf_output = Button(
             self.parent,
             text="> Play Output",
-            command=lambda: UF.wavplay(f"output_sounds/{os.path.basename(self.filelocation1.get())[:-4]}_hpsMorph.wav"),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation1.get())[:-4] + "_hpsMorph.wav")),
         )
         self.transf_output.grid(row=row_num, column=0, columnspan=4, sticky=W, padx=5, pady=(0, 10))
 

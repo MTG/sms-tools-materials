@@ -80,7 +80,10 @@ def analysis(
     y, yh, yst = HPS.hpsModelSynth(hfreq, hmag, np.array([]), mYst, Ns, H, fs)
 
     # write output sound
-    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_hpsModel.wav"
+    stem = os.path.basename(inputFile)[:-4]
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds")
+    os.makedirs(output_dir, exist_ok=True)
+    outputFile = os.path.join(output_dir, f"{stem}_hpsModel.wav")
     UF.wavwrite(y, fs, outputFile)
 
     # create figure to plot
@@ -168,11 +171,10 @@ def transformation_synthesis(
     y, yh, yst = HPS.hpsModelSynth(yhfreq, yhmag, np.array([]), ystocEnv, Ns, H, fs)
 
     # write output sound
-    outputFile = (
-        "output_sounds/"
-        + os.path.basename(inputFile)[:-4]
-        + "_hpsModelTransformation.wav"
-    )
+    stem = os.path.basename(inputFile)[:-4]
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds")
+    os.makedirs(output_dir, exist_ok=True)
+    outputFile = os.path.join(output_dir, f"{stem}_hpsModelTransformation.wav")
     UF.wavwrite(y, fs, outputFile)
 
     # create figure to plot

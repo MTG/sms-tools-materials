@@ -65,7 +65,10 @@ def main(
     y = SM.sineModelSynth(hfreq, hmag, hphase, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
-    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_harmonicModel.wav"
+    stem = os.path.basename(inputFile)[:-4]
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds")
+    os.makedirs(output_dir, exist_ok=True)
+    outputFile = os.path.join(output_dir, f"{stem}_harmonicModel.wav")
 
     # write the sound resulting from harmonic analysis
     UF.wavwrite(y, fs, outputFile)

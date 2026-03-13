@@ -82,7 +82,10 @@ def analysis(
     y = SM.sineModelSynth(hfreq, hmag, np.array([]), Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
-    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_harmonicModel.wav"
+    stem = os.path.basename(inputFile)[:-4]
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds")
+    os.makedirs(output_dir, exist_ok=True)
+    outputFile = os.path.join(output_dir, f"{stem}_harmonicModel.wav")
 
     # write the sound resulting from the inverse stft
     UF.wavwrite(y, fs, outputFile)
@@ -156,7 +159,10 @@ def transformation_synthesis(
     y = SM.sineModelSynth(yhfreq, yhmag, np.array([]), Ns, H, fs)
 
     # write output sound
-    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_harmonicModelTransformation.wav"
+    stem = os.path.basename(inputFile)[:-4]
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds")
+    os.makedirs(output_dir, exist_ok=True)
+    outputFile = os.path.join(output_dir, f"{stem}_harmonicModelTransformation.wav")
     UF.wavwrite(y, fs, outputFile)
 
     # create figure to plot

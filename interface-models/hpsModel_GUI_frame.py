@@ -149,46 +149,41 @@ class HpsModel_frame:
         self.stocf.insert(0, "0.2")
 
         # Row 8: Compute button
-        self.compute = Button(self.parent, text="Compute", command=self.compute_model)
+        self.compute = Button(self.parent, text="Compute", command=self.compute_model, font=("TkDefaultFont", 11, "bold"), padx=10, pady=4)
         self.compute.grid(row=8, column=0, columnspan=4, sticky=W, padx=5, pady=(10, 5))
 
-        # Row 9: Output buttons
-        Label(self.parent, text="Outputs:").grid(
-            row=9, column=0, sticky=W, padx=5, pady=(5, 5)
+        # BUTTON TO PLAY SINUSOIDAL OUTPUT
+        Label(self.parent, text="Sinusoidal:").grid(
+            row=9, column=0, sticky=W, padx=5, pady=(10, 0)
         )
-
         self.output_sine = Button(
             self.parent,
-            text="> Sinusoidal",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_hpsModel_sines.wav"
-            ),
+            text=">",
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_hpsModel_sines.wav")),
         )
-        self.output_sine.grid(row=9, column=1, sticky=W, padx=5, pady=(5, 5))
+        self.output_sine.grid(row=9, column=0, padx=(80, 5), pady=(10, 0), sticky=W)
 
+        # BUTTON TO PLAY STOCHASTIC OUTPUT
+        Label(self.parent, text="Stochastic:").grid(
+            row=10, column=0, sticky=W, padx=5, pady=(5, 0)
+        )
         self.output_stoch = Button(
             self.parent,
-            text="> Stochastic",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_hpsModel_stochastic.wav"
-            ),
+            text=">",
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_hpsModel_stochastic.wav")),
         )
-        self.output_stoch.grid(row=9, column=2, sticky=W, padx=5, pady=(5, 5))
+        self.output_stoch.grid(row=10, column=0, padx=(80, 5), pady=(5, 0), sticky=W)
 
+        # BUTTON TO PLAY OUTPUT
+        Label(self.parent, text="Output:").grid(
+            row=11, column=0, sticky=W, padx=5, pady=(5, 15)
+        )
         self.output = Button(
             self.parent,
-            text="> Combined",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_hpsModel.wav"
-            ),
+            text=">",
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_hpsModel.wav")),
         )
-        self.output.grid(row=9, column=3, sticky=W, padx=5, pady=(5, 5))
+        self.output.grid(row=11, column=0, padx=(80, 5), pady=(5, 15), sticky=W)
 
         # define options for opening file
         self.file_opt = options = {}

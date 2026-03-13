@@ -62,7 +62,10 @@ def main(
     y = SM.sineModelSynth(tfreq, tmag, tphase, Ns, H, fs)
 
     # output sound file name
-    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_sineModel.wav"
+    stem = os.path.basename(inputFile)[:-4]
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds")
+    os.makedirs(output_dir, exist_ok=True)
+    outputFile = os.path.join(output_dir, f"{stem}_sineModel.wav")
 
     # write the synthesized sound obtained from the sinusoidal synthesis
     UF.wavwrite(y, fs, outputFile)

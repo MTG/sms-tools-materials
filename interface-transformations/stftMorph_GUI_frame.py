@@ -200,6 +200,9 @@ class StftMorph_frame:
             self.parent,
             text="Apply Transformation",
             command=self.transformation_synthesis,
+            font=("TkDefaultFont", 11, "bold"),
+            padx=10,
+            pady=4,
         )
         self.compute.grid(row=11, column=0, padx=5, pady=(10, 15), sticky=W)
 
@@ -207,11 +210,7 @@ class StftMorph_frame:
         self.transf_output = Button(
             self.parent,
             text=">",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation1.get())[:-4]
-                + "_stftMorph.wav"
-            ),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation1.get())[:-4] + "_stftMorph.wav")),
         )
         self.transf_output.grid(
             row=11, column=0, padx=(165, 5), pady=(10, 15), sticky=W

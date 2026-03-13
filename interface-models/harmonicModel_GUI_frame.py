@@ -148,7 +148,7 @@ class HarmonicModel_frame:
         self.harmDevSlope.insert(0, "0.01")
 
         # BUTTON TO COMPUTE EVERYTHING
-        self.compute = Button(self.parent, text="Compute", command=self.compute_model)
+        self.compute = Button(self.parent, text="Compute", command=self.compute_model, font=("TkDefaultFont", 11, "bold"), padx=10, pady=4)
         self.compute.grid(row=12, column=0, padx=5, pady=(10, 2), sticky=W)
 
         # BUTTON TO PLAY OUTPUT
@@ -158,11 +158,7 @@ class HarmonicModel_frame:
         self.output = Button(
             self.parent,
             text=">",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_harmonicModel.wav"
-            ),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_harmonicModel.wav")),
         )
         self.output.grid(row=13, column=0, padx=(60, 5), pady=(10, 15), sticky=W)
 

@@ -129,7 +129,7 @@ class SprModel_frame:
         self.freqDevSlope.insert(0, "0.001")
 
         # BUTTON TO COMPUTE EVERYTHING
-        self.compute = Button(self.parent, text="Compute", command=self.compute_model)
+        self.compute = Button(self.parent, text="Compute", command=self.compute_model, font=("TkDefaultFont", 11, "bold"), padx=10, pady=4)
         self.compute.grid(row=10, column=0, padx=5, pady=(10, 2), sticky=W)
 
         # BUTTON TO PLAY SINE OUTPUT
@@ -139,11 +139,7 @@ class SprModel_frame:
         self.output = Button(
             self.parent,
             text=">",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_sprModel_sines.wav"
-            ),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_sprModel_sines.wav")),
         )
         self.output.grid(row=11, column=0, padx=(80, 5), pady=(10, 0), sticky=W)
 
@@ -154,11 +150,7 @@ class SprModel_frame:
         self.output = Button(
             self.parent,
             text=">",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_sprModel_residual.wav"
-            ),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_sprModel_residual.wav")),
         )
         self.output.grid(row=12, column=0, padx=(80, 5), pady=(5, 0), sticky=W)
 
@@ -169,11 +161,7 @@ class SprModel_frame:
         self.output = Button(
             self.parent,
             text=">",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_sprModel.wav"
-            ),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_sprModel.wav")),
         )
         self.output.grid(row=13, column=0, padx=(80, 5), pady=(5, 15), sticky=W)
 

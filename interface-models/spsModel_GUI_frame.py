@@ -136,7 +136,7 @@ class SpsModel_frame:
         self.stocf.insert(0, "0.2")
 
         # BUTTON TO COMPUTE EVERYTHING
-        self.compute = Button(self.parent, text="Compute", command=self.compute_model)
+        self.compute = Button(self.parent, text="Compute", command=self.compute_model, font=("TkDefaultFont", 11, "bold"), padx=10, pady=4)
         self.compute.grid(row=11, column=0, padx=5, pady=(10, 2), sticky=W)
 
         # BUTTON TO PLAY SINE OUTPUT
@@ -146,11 +146,7 @@ class SpsModel_frame:
         self.output = Button(
             self.parent,
             text=">",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_spsModel_sines.wav"
-            ),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_spsModel_sines.wav")),
         )
         self.output.grid(row=12, column=0, padx=(80, 5), pady=(10, 0), sticky=W)
 
@@ -161,11 +157,7 @@ class SpsModel_frame:
         self.output = Button(
             self.parent,
             text=">",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_spsModel_stochastic.wav"
-            ),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_spsModel_stochastic.wav")),
         )
         self.output.grid(row=22, column=0, padx=(80, 5), pady=(5, 0), sticky=W)
 
@@ -176,12 +168,9 @@ class SpsModel_frame:
         self.output = Button(
             self.parent,
             text=">",
-            command=lambda: UF.wavplay(
-                "output_sounds/"
-                + os.path.basename(self.filelocation.get())[:-4]
-                + "_spsModel.wav"
-            ),
+            command=lambda: UF.wavplay(os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds", os.path.basename(self.filelocation.get())[:-4] + "_spsModel.wav")),
         )
+        self.output.grid(row=23, column=0, padx=(80, 5), pady=(5, 15), sticky=W)
 
         # define options for opening file
         self.file_opt = options = {}

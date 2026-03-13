@@ -75,9 +75,12 @@ def main(
     y, yh = HPR.hprModelSynth(hfreq, hmag, hphase, xr, Ns, H, fs)
 
     # output sound file (monophonic with sampling rate of 44100)
-    outputFileSines = f"output_sounds/{os.path.basename(inputFile)[:-4]}_hprModel_sines.wav"
-    outputFileResidual = f"output_sounds/{os.path.basename(inputFile)[:-4]}_hprModel_residual.wav"
-    outputFile = f"output_sounds/{os.path.basename(inputFile)[:-4]}_hprModel.wav"
+    stem = os.path.basename(inputFile)[:-4]
+    output_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output_sounds")
+    os.makedirs(output_dir, exist_ok=True)
+    outputFileSines = os.path.join(output_dir, f"{stem}_hprModel_sines.wav")
+    outputFileResidual = os.path.join(output_dir, f"{stem}_hprModel_residual.wav")
+    outputFile = os.path.join(output_dir, f"{stem}_hprModel.wav")
 
     # write sounds files for harmonics, residual, and the sum
     UF.wavwrite(yh, fs, outputFileSines)

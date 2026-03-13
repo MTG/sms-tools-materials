@@ -46,31 +46,43 @@ class notebook(object):
         return self.screen_fr
 
     def _update_scroll_region(self, event=None):
-        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        bbox = self.canvas.bbox("all")
+        if bbox is not None:
+            self.canvas.configure(scrollregion=bbox)
 
     def _resize_canvas_window(self, event):
-        req_width = self.screen_fr.winfo_reqwidth()
-        req_height = self.screen_fr.winfo_reqheight()
-        self.canvas.itemconfigure(
-            self.screen_window,
-            width=max(event.width, req_width),
-            height=max(event.height, req_height),
-        )
+        self.canvas.itemconfigure(self.screen_window, width=event.width)
         self._update_scroll_region()
 
     def _bind_mousewheel(self, event=None):
         self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
         self.canvas.bind_all("<Shift-MouseWheel>", self._on_shift_mousewheel)
+        self.canvas.bind_all("<Button-4>", self._on_mousewheel_linux)
+        self.canvas.bind_all("<Button-5>", self._on_mousewheel_linux)
 
     def _unbind_mousewheel(self, event=None):
         self.canvas.unbind_all("<MouseWheel>")
         self.canvas.unbind_all("<Shift-MouseWheel>")
+        self.canvas.unbind_all("<Button-4>")
+        self.canvas.unbind_all("<Button-5>")
 
     def _on_mousewheel(self, event):
-        self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+        step = int(-event.delta / 120)
+        if step == 0 and event.delta != 0:
+            step = -1 if event.delta > 0 else 1
+        self.canvas.yview_scroll(step, "units")
 
     def _on_shift_mousewheel(self, event):
-        self.canvas.xview_scroll(int(-1 * (event.delta / 120)), "units")
+        step = int(-event.delta / 120)
+        if step == 0 and event.delta != 0:
+            step = -1 if event.delta > 0 else 1
+        self.canvas.xview_scroll(step, "units")
+
+    def _on_mousewheel_linux(self, event):
+        if event.num == 4:
+            self.canvas.yview_scroll(-1, "units")
+        elif event.num == 5:
+            self.canvas.yview_scroll(1, "units")
 
     def add_screen(self, fr, title, build_func=None):
         if build_func is not None:
@@ -95,6 +107,8 @@ class notebook(object):
             self._pending.pop(fr)(fr)
         fr.pack(fill=BOTH, expand=1)
         self.active_fr = fr
+        fr.update_idletasks()
+        self.screen_fr.update_idletasks()
         self.canvas.update_idletasks()
         self.canvas.xview_moveto(0)
         self.canvas.yview_moveto(0)
