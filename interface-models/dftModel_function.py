@@ -1,20 +1,16 @@
 # function to call the main analysis/synthesis functions in software/models/dftModel.py
 
 import os
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
 from smstools.models import utilFunctions as UF
 from smstools.models import dftModel as DFT
-
-
-def _plot_waveform(sound, fs, M, time, title="sound"):
-    """Helper to plot a waveform consistently with time offset."""
-    plt.plot(time + np.arange(M) / float(fs), sound)
-    plt.axis([time, time + M / float(fs), min(sound), max(sound)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title(title)
+_this_dir = os.path.dirname(os.path.abspath(__file__))
+if _this_dir not in sys.path:
+    sys.path.insert(0, _this_dir)
+import plot_helpers as PH
 
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
@@ -51,26 +47,25 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="blackman", M=
 
     # plot the sound fragment
     plt.subplot(4, 1, 1)
-    _plot_waveform(x1, fs, M, time, "input sound: x")
+    t = time + np.arange(M) / float(fs)
+    PH.plot_waveform(plt.gca(), x1, fs, title="input sound: x")
+    plt.xlim([time, time + M / float(fs)])
 
     # plot the magnitude spectrum
     plt.subplot(4, 1, 2)
-    plt.plot(float(fs) * np.arange(mX.size) / float(N), mX, "r")
-    plt.axis([0, fs / 2.0, min(mX), max(mX)])
-    plt.title("magnitude spectrum: mX")
-    plt.ylabel("amplitude (dB)")
-    plt.xlabel("frequency (Hz)")
+    freqs = float(fs) * np.arange(mX.size) / float(N)
+    PH.plot_spectrum(plt.gca(), freqs, mX, title="magnitude spectrum: mX", xlabel="frequency (Hz)", ylabel="amplitude (dB)", color="r")
+    plt.xlim([0, fs / 2.0])
     # plot the phase spectrum
     plt.subplot(4, 1, 3)
-    plt.plot(float(fs) * np.arange(pX.size) / float(N), pX, "c")
-    plt.axis([0, fs / 2.0, min(pX), max(pX)])
-    plt.title("phase spectrum: pX")
-    plt.ylabel("phase (radians)")
-    plt.xlabel("frequency (Hz)")
+    freqs = float(fs) * np.arange(pX.size) / float(N)
+    PH.plot_spectrum(plt.gca(), freqs, pX, title="phase spectrum: pX", xlabel="frequency (Hz)", ylabel="phase (radians)", color="c")
+    plt.xlim([0, fs / 2.0])
 
     # plot the sound resulting from the inverse dft
     plt.subplot(4, 1, 4)
-    _plot_waveform(y, fs, M, time, "output sound: y")
+    PH.plot_waveform(plt.gca(), y, fs, title="output sound: y")
+    plt.xlim([time, time + M / float(fs)])
 
     plt.tight_layout()
     plt.ion()

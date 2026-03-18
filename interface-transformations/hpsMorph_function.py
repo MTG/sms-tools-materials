@@ -1,3 +1,4 @@
+from plot_helpers import setup_plot_style, plot_waveform, plot_frequency_tracks, _mask_frequencies, _plot_waveform
 # function for doing a morph between two sounds using the hpsModel
 
 import os
@@ -7,24 +8,13 @@ from scipy.signal import get_window
 from smstools.models import hpsModel as HPS
 from smstools.transformations import hpsTransformations as HPST
 from smstools.models import utilFunctions as UF
-
-
-def _plot_waveform(sound, fs, title="sound"):
-    """Helper to plot a waveform consistently."""
-    plt.plot(np.arange(sound.size) / float(fs), sound)
-    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title(title)
+import sys
+_this_dir = os.path.dirname(os.path.abspath(__file__))
+if _this_dir not in sys.path:
+    sys.path.insert(0, _this_dir)
+import plot_helpers as PH
 
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
-
-
-def _mask_frequencies(freq, maxfreq):
-    """Mask frequencies above maxfreq and set zeros to NaN."""
-    masked = np.copy(freq) * np.less(freq, maxfreq)
-    masked[masked == 0] = np.nan
-    return masked
 
 
 def analysis(
@@ -146,30 +136,17 @@ def analysis(
         plt.title("harmonics + stochastic spectrogram of sound 1")
 
     # plot spectrogram stochastic component of sound 2
-    plt.subplot(2, 1, 2)
-    numFrames = int(stocEnv2[:, 0].size)
-    sizeEnv = int(stocEnv2[0, :].size)
-    frmTime = H * np.arange(numFrames) / float(fs2)
-    binFreq = (0.5 * fs2) * np.arange(sizeEnv * maxplotfreq / (0.5 * fs2)) / sizeEnv
-    plt.pcolormesh(
-        frmTime,
-        binFreq,
-        np.transpose(stocEnv2[:, : int(sizeEnv * maxplotfreq / (0.5 * fs2)) + 1]),
+    plt.subplot(2, 1, 1)
+    numFrames = stocEnv1.shape[0]
+    sizeEnv = stocEnv1.shape[1]
+    frame_time = H * np.arange(numFrames) / float(fs1)
+    binFreq = (0.5 * fs1) * np.arange(sizeEnv) / sizeEnv
+    tracks = hfreq1 * np.less(hfreq1, maxplotfreq) if hfreq1.shape[1] > 0 else None
+    PH.plot_spectrogram_with_tracks(
+        plt.gca(), stocEnv1, tracks if tracks is not None else np.zeros_like(stocEnv1),
+        fs1, N1, H, max_plot_freq=maxplotfreq, title="harmonics + stochastic spectrogram",
+        frame_time=frame_time, bin_freq=binFreq
     )
-    plt.autoscale(tight=True)
-
-    # plot harmonic on top of stochastic spectrogram of sound 2
-    if hfreq2.shape[1] > 0:
-        harms = _mask_frequencies(hfreq2, maxplotfreq)
-        numFrames = int(harms[:, 0].size)
-        frmTime = H * np.arange(numFrames) / float(fs2)
-        plt.plot(frmTime, harms, color="k", ms=3, alpha=1)
-        plt.xlabel("time (sec)")
-        plt.ylabel("frequency (Hz)")
-        plt.autoscale(tight=True)
-        plt.title("harmonics + stochastic spectrogram of sound 2")
-
-    plt.tight_layout()
     plt.show(block=False)
 
     return inputFile1, fs1, hfreq1, hmag1, stocEnv1, inputFile2, hfreq2, hmag2, stocEnv2

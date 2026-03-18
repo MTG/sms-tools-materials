@@ -1,5 +1,4 @@
 # function call to the transformation functions of relevance for the sineModel
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.signal import get_window
@@ -8,21 +7,18 @@ from smstools.models import sineModel as SM
 from smstools.transformations import sineTransformations as ST
 from smstools.models import utilFunctions as UF
 
+# Add interface-transformations to sys.path for robust imports
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from plot_helpers import setup_plot_style, plot_waveform, plot_frequency_tracks
 
-def _plot_waveform(sound, fs, title="sound"):
-    """Helper to plot a waveform consistently."""
-    plt.plot(np.arange(sound.size) / float(fs), sound)
-    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title(title)
 
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
 
+
 def _mask_frequencies(freq, maxfreq):
-    """Mask frequencies above maxfreq and set zeros to NaN."""
-    masked = np.copy(freq) * np.less(freq, maxfreq)
+    masked = np.copy(freq)
+    masked[masked > maxfreq] = np.nan
     masked[masked <= 0] = np.nan
     return masked
 
@@ -80,33 +76,24 @@ def analysis(
     # write the sound resulting from the inverse stft
     UF.wavwrite(y, fs, outputFile)
 
-    # create figure to show plots
-    plt.figure(figsize=(9, 6))
 
-    # frequency range to plot
+    setup_plot_style()
+    fig, axes = plt.subplots(3, 1, figsize=(9, 6))
     maxplotfreq = 5000.0
 
-    # plot the input sound
-    plt.subplot(3, 1, 1)
-    _plot_waveform(x, fs, "input sound: x")
+    # plot input sound
+    plot_waveform(axes[0], x, fs, title="input sound: x")
 
-    # plot the sinusoidal frequencies
+    # plot sinusoidal frequencies
     if tfreq.shape[1] > 0:
-        plt.subplot(3, 1, 2)
-        tracks = np.copy(tfreq)
-        tracks = tracks * np.less(tracks, maxplotfreq)
-        tracks[tracks <= 0] = np.nan
-        numFrames = int(tracks[:, 0].size)
-        frmTime = H * np.arange(numFrames) / float(fs)
-        plt.plot(frmTime, tracks)
-        plt.axis([0, x.size / float(fs), 0, maxplotfreq])
-        plt.title("frequencies of sinusoidal tracks")
+        tracks = _mask_frequencies(tfreq, maxplotfreq)
+        plot_frequency_tracks(axes[1], tracks, fs, H, title="frequencies of sinusoidal tracks", max_freq=maxplotfreq)
+        axes[1].set_xlim([0, x.size / float(fs)])
 
-    # plot the output sound
-    plt.subplot(3, 1, 3)
-    _plot_waveform(y, fs, "output sound: y")
+    # plot output sound
+    plot_waveform(axes[2], y, fs, title="output sound: y")
 
-    plt.tight_layout()
+    fig.tight_layout()
     plt.show(block=False)
 
     return inputFile, fs, tfreq, tmag
@@ -150,31 +137,21 @@ def transformation_synthesis(
     outputFile = os.path.join(output_dir, f"{stem}_sineModelTransformation.wav")
     UF.wavwrite(y, fs, outputFile)
 
-    # create figure to plot
-    plt.figure(figsize=(12, 6))
 
-    # frequency range to plot
+    setup_plot_style()
+    fig, axes = plt.subplots(2, 1, figsize=(12, 6))
     maxplotfreq = 15000.0
 
-    # plot the transformed sinusoidal frequencies
+    # plot transformed sinusoidal frequencies
     if ytfreq.shape[1] > 0:
-        plt.subplot(2, 1, 1)
         tracks = _mask_frequencies(ytfreq, maxplotfreq)
-        numFrames = int(tracks[:, 0].size)
-        frmTime = H * np.arange(numFrames) / float(fs)
-        plt.plot(frmTime, tracks)
-        plt.title("transformed sinusoidal tracks")
-        plt.autoscale(tight=True)
+        plot_frequency_tracks(axes[0], tracks, fs, H, title="transformed sinusoidal tracks", max_freq=maxplotfreq)
+        axes[0].set_xlim([0, y.size / float(fs)])
 
-    # plot the output sound
-    plt.subplot(2, 1, 2)
-    plt.plot(np.arange(y.size) / float(fs), y)
-    plt.axis([0, y.size / float(fs), min(y), max(y)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title("output sound: y")
+    # plot output sound
+    plot_waveform(axes[1], y, fs, title="output sound: y")
 
-    plt.tight_layout()
+    fig.tight_layout()
     plt.show()
 
 

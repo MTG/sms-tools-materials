@@ -118,15 +118,22 @@ def install_audio_button_style():
 
 root = Tk()
 root.title("sms-tools transformations GUI")
+
+# Set larger default window size
+root.geometry("1200x800")
+root.minsize(900, 600)
+
 install_audio_button_style()
 install_embedded_plot_viewer(root)
-nb = notebook(
-    root, TOP
-)  # make a few diverse frames (panels), each using the NB as 'master':
+
+# Create a single notebook instance and pack its frames
+nb = notebook(root, TOP)
+nb.rb_fr.pack(side=TOP, fill=X)
+nb.screen_container.pack(fill=BOTH, expand=1)
 
 # Frames are built lazily: only when the tab is first selected.
-f1 = Frame(nb()); nb.add_screen(f1, "STFT Morph",  build_func=lambda f: StftMorph_frame(f))
-f2 = Frame(nb()); nb.add_screen(f2, "Sine",         build_func=lambda f: SineTransformations_frame(f))
+f1 = Frame(nb()); nb.add_screen(f1, "STFT Morph",  build_func=lambda f: StftMorph_frame(f).pack(fill=BOTH, expand=True))
+f2 = Frame(nb()); nb.add_screen(f2, "Sine",         build_func=lambda f: SineTransformations_frame(f).pack(fill=BOTH, expand=True))
 f3 = Frame(nb()); nb.add_screen(f3, "Harmonic",     build_func=lambda f: HarmonicTransformations_frame(f))
 f4 = Frame(nb()); nb.add_screen(f4, "Stochastic",   build_func=lambda f: StochasticTransformations_frame(f))
 f5 = Frame(nb()); nb.add_screen(f5, "HPS",          build_func=lambda f: HpsTransformations_frame(f))

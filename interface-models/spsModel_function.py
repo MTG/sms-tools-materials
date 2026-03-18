@@ -6,36 +6,13 @@ import matplotlib.pyplot as plt
 from scipy.signal import get_window
 from smstools.models import spsModel as SPS
 from smstools.models import utilFunctions as UF
+_this_dir = os.path.dirname(os.path.abspath(__file__))
+if _this_dir not in sys.path:
+    sys.path.insert(0, _this_dir)
+import plot_helpers as PH
 
-
-def _plot_waveform(sound, fs, title="sound"):
-    """Helper to plot a waveform consistently."""
-    plt.plot(np.arange(sound.size) / float(fs), sound)
-    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title(title)
-
-_sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
-
-
-def _mask_frequencies(freq, maxfreq):
-    """Mask frequencies above maxfreq and set zeros to NaN."""
-    masked = freq * np.less(freq, maxfreq)
-    masked[masked <= 0] = np.nan
-    return masked
-
-
-def _plot_sine_overlay(tfreq, maxplotfreq, H, fs, title="sinusoidal + stochastic spectrogram"):
-    """Overlay sinusoidal frequency tracks on the current matplotlib subplot."""
-    if tfreq.shape[1] > 0:
-        sines = _mask_frequencies(tfreq, maxplotfreq)
-        frmTime = H * np.arange(int(sines[:, 0].size)) / float(fs)
-        plt.plot(frmTime, sines, color="k", ms=3, alpha=1)
-        plt.xlabel("time(s)")
-        plt.ylabel("Frequency(Hz)")
-        plt.autoscale(tight=True)
-        plt.title(title)
+# Define sounds directory for input files
+_sounds_dir = os.path.normpath(os.path.join(_this_dir, "..", "sounds"))
 
 
 def main(
@@ -102,27 +79,24 @@ def main(
 
     # plot the input sound
     plt.subplot(3, 1, 1)
-    _plot_waveform(x, fs, "input sound: x")
+    PH.plot_waveform(plt.gca(), x, fs, title="input sound: x")
 
     plt.subplot(3, 1, 2)
-    numFrames = int(stocEnv[:, 0].size)
-    sizeEnv = int(stocEnv[0, :].size)
-    frmTime = H * np.arange(numFrames) / float(fs)
-    binFreq = (0.5 * fs) * np.arange(sizeEnv * maxplotfreq / (0.5 * fs)) / sizeEnv
-    plt.pcolormesh(
-        frmTime,
-        binFreq,
-        np.transpose(stocEnv[:, : int(sizeEnv * maxplotfreq / (0.5 * fs) + 1)]),
-        shading="auto",
+    # Compute binFreq and frame_time for stochastic spectrogram
+    numFrames = stocEnv.shape[0]
+    sizeEnv = stocEnv.shape[1]
+    frame_time = H * np.arange(numFrames) / float(fs)
+    binFreq = (0.5 * fs) * np.arange(sizeEnv) / sizeEnv
+    tracks = tfreq * np.less(tfreq, maxplotfreq) if tfreq.shape[1] > 0 else None
+    PH.plot_spectrogram_with_tracks(
+        plt.gca(), stocEnv, tracks if tracks is not None else np.zeros_like(stocEnv),
+        fs, N, H, max_plot_freq=maxplotfreq, title="sinusoidal + stochastic spectrogram",
+        frame_time=frame_time, bin_freq=binFreq
     )
-    plt.autoscale(tight=True)
-
-    # plot sinusoidal frequencies on top of stochastic component
-    _plot_sine_overlay(tfreq, maxplotfreq, H, fs)
 
     # plot the output sound
     plt.subplot(3, 1, 3)
-    _plot_waveform(y, fs, "output sound: y")
+    PH.plot_waveform(plt.gca(), y, fs, title="output sound: y")
 
     plt.tight_layout()
     plt.ion()

@@ -7,15 +7,14 @@ from scipy.signal import get_window
 from smstools.models import stft as STFT
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stftTransformations as STFTT
+import sys
+_this_dir = os.path.dirname(os.path.abspath(__file__))
+if _this_dir not in sys.path:
+    sys.path.insert(0, _this_dir)
+import plot_helpers as PH
 
 
-def _plot_waveform(sound, fs, title="sound"):
-    """Helper to plot a waveform consistently."""
-    plt.plot(np.arange(sound.size) / float(fs), sound)
-    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title(title)
+## Removed duplicate waveform plotting, now using PH.plot_waveform
 
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
@@ -77,37 +76,19 @@ def main(
 
     # plot sound 1
     plt.subplot(4, 1, 1)
-    _plot_waveform(x1, fs, "input sound: x")
+    PH.plot_waveform(plt.gca(), x1, fs, title="input sound: x")
 
     # plot magnitude spectrogram of sound 1
     plt.subplot(4, 1, 2)
-    numFrames = int(mX1[:, 0].size)
-    frmTime = H1 * np.arange(numFrames) / float(fs)
-    binFreq = fs * np.arange(N1 * maxplotfreq / fs) / N1
-    plt.pcolormesh(
-        frmTime, binFreq, np.transpose(mX1[:, : int(N1 * maxplotfreq / fs) + 1])
-    )
-    plt.xlabel("time (sec)")
-    plt.ylabel("frequency (Hz)")
-    plt.title("magnitude spectrogram of x")
-    plt.autoscale(tight=True)
+    PH.plot_spectrogram(plt.gca(), mX1, fs, N1, H1, max_plot_freq=maxplotfreq, title="magnitude spectrogram of x")
 
     # plot magnitude spectrogram of morphed sound
     plt.subplot(4, 1, 3)
-    numFrames = int(mY[:, 0].size)
-    frmTime = H1 * np.arange(numFrames) / float(fs)
-    binFreq = fs * np.arange(N1 * maxplotfreq / fs) / N1
-    plt.pcolormesh(
-        frmTime, binFreq, np.transpose(mY[:, : int(N1 * maxplotfreq / fs) + 1])
-    )
-    plt.xlabel("time (sec)")
-    plt.ylabel("frequency (Hz)")
-    plt.title("magnitude spectrogram of y")
-    plt.autoscale(tight=True)
+    PH.plot_spectrogram(plt.gca(), mY, fs, N1, H1, max_plot_freq=maxplotfreq, title="magnitude spectrogram of y")
 
     # plot the morphed sound
     plt.subplot(4, 1, 4)
-    _plot_waveform(y, fs, "output sound: y")
+    PH.plot_waveform(plt.gca(), y, fs, title="output sound: y")
 
     plt.tight_layout()
     plt.show()

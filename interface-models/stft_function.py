@@ -6,26 +6,12 @@ import os, sys
 from scipy.signal import get_window
 from smstools.models import utilFunctions as UF
 from smstools.models import stft as STFT
-
-
-def _plot_waveform(sound, fs, title="sound"):
-    """Helper to plot a waveform consistently."""
-    plt.plot(np.arange(sound.size) / float(fs), sound)
-    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title(title)
+_this_dir = os.path.dirname(os.path.abspath(__file__))
+if _this_dir not in sys.path:
+    sys.path.insert(0, _this_dir)
+import plot_helpers as PH
 
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
-
-
-def _label_spectrogram(title):
-    """Add standard labels to a spectrogram plot."""
-    plt.xlabel("time (sec)")
-    plt.ylabel("frequency (Hz)")
-    plt.title(title)
-    plt.autoscale(tight=True)
-
 
 def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="hamming", M=1024, N=1024, H=512):
     """
@@ -66,33 +52,33 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="hamming", M=1
 
     # plot the input sound
     plt.subplot(4, 1, 1)
-    _plot_waveform(x, fs, "input sound: x")
+    PH.plot_waveform(plt.gca(), x, fs, title="input sound: x")
 
     # plot magnitude spectrogram
     plt.subplot(4, 1, 2)
-    numFrames = int(mX[:, 0].size)
-    frmTime = H * np.arange(numFrames) / float(fs)
-    binFreq = fs * np.arange(N * maxplotfreq / fs) / N
-    plt.pcolormesh(
-        frmTime, binFreq, np.transpose(mX[:, : int(N * maxplotfreq / fs + 1)])
-    )
-    _label_spectrogram("magnitude spectrogram")
+    PH.plot_spectrogram(plt.gca(), mX, fs, N, H, max_plot_freq=maxplotfreq, title="magnitude spectrogram")
 
     # plot the phase spectrogram
     plt.subplot(4, 1, 3)
-    numFrames = int(pX[:, 0].size)
-    frmTime = H * np.arange(numFrames) / float(fs)
-    binFreq = fs * np.arange(N * maxplotfreq // fs) // N
-    plt.pcolormesh(
-        frmTime,
-        binFreq,
-        np.transpose(np.diff(pX[:, : int(N * maxplotfreq / fs + 1)], axis=1)),
+    # Compute phase difference spectrogram
+    n_bins = int(N * maxplotfreq / fs) + 1
+    phase_diff = np.diff(pX[:, :n_bins], axis=1)
+    # Adjust bin_freq to match the reduced dimension after np.diff
+    bin_freq = fs * np.arange(n_bins - 1) / N
+    PH.plot_spectrogram(
+        plt.gca(),
+        phase_diff,
+        fs,
+        N,
+        H,
+        max_plot_freq=maxplotfreq,
+        title="phase spectrogram (derivative)",
+        bin_freq=bin_freq
     )
-    _label_spectrogram("phase spectrogram (derivative)")
 
     # plot the output sound
     plt.subplot(4, 1, 4)
-    _plot_waveform(y, fs, "output sound: y")
+    PH.plot_waveform(plt.gca(), y, fs, title="output sound: y")
 
     plt.tight_layout()
     plt.ion()

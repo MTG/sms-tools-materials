@@ -178,21 +178,23 @@ class HpsTransformations_frame:
         ###
 
         # FREQUENCY SCALING FACTORS
-        Label(self.parent, text="Frequency scaling factors (time, value pairs):").grid(
+
+        Label(self.parent, text="Frequency scaling factors (time, value pairs):", font=("TkDefaultFont", 11)).grid(
             row=6, column=0, sticky=W, padx=5, pady=(5, 2)
         )
-        self.freqScaling = place_entry(self.parent, row=7, padx=5, default="[0, 1.2, 2.01, 1.2, 2.679, .7, 3.146, .7]", width=35, sticky="we", pady=(0, 2))
+        self.freqScaling = place_entry(self.parent, row=7, padx=5, default="[0, 1.2, 2.01, 1.2, 2.679, .7, 3.146, .7]", width=60, sticky="we", pady=(0, 2))
 
         # FREQUENCY STRETCHING FACTORS
-        Label(self.parent, text="Frequency stretching factors (time, value pairs):").grid(
+        Label(self.parent, text="Frequency stretching factors (time, value pairs):", font=("TkDefaultFont", 11)).grid(
             row=8, column=0, sticky=W, padx=5, pady=(5, 2)
         )
-        self.freqStretching = place_entry(self.parent, row=9, padx=5, default="[0, 1, 2.01, 1, 2.679, 1.5, 3.146, 1.5]", width=35, sticky="we", pady=(0, 2))
+        self.freqStretching = place_entry(self.parent, row=9, padx=5, default="[0, 1, 2.01, 1, 2.679, 1.5, 3.146, 1.5]", width=60, sticky="we", pady=(0, 2))
 
         # TIMBRE PRESERVATION
         Label(
             self.parent,
             text="Timbre preservation (1 preserves original timbre, 0 it does not):",
+            font=("TkDefaultFont", 11)
         ).grid(
             row=10, column=0, sticky=W, padx=5, pady=(5, 2)
         )
@@ -204,10 +206,10 @@ class HpsTransformations_frame:
         self.timbrePreservation.insert(0, "1")
 
         # TIME SCALING FACTORS
-        Label(self.parent, text="Time scaling factors (time, value pairs):").grid(
+        Label(self.parent, text="Time scaling factors (time, value pairs):", font=("TkDefaultFont", 11)).grid(
             row=11, column=0, sticky=W, padx=5, pady=(5, 2)
         )
-        self.timeScaling = place_entry(self.parent, row=12, padx=5, default="[0, 0, 2.138, 2.138-1.0, 3.146, 3.146]", width=35, sticky="we", pady=(0, 2))
+        self.timeScaling = place_entry(self.parent, row=12, padx=5, default="[0, 0, 2.138, 2.138-1.0, 3.146, 3.146]", width=60, sticky="we", pady=(0, 2))
 
         # BUTTON TO DO THE SYNTHESIS
         self.compute = Button(

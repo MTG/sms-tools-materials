@@ -1,5 +1,6 @@
 # function call to the transformation function of relevance to the stochasticModel
 
+    # Removed empty function definition; now using plot_helpers
 import os
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,14 +8,11 @@ from smstools.models import stochasticModel as STC
 from smstools.models import utilFunctions as UF
 from smstools.transformations import stochasticTransformations as STCT
 
+# Add interface-transformations to sys.path for robust imports
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from plot_helpers import setup_plot_style, plot_waveform
 
-def _plot_waveform(sound, fs, title="sound"):
-    """Helper to plot a waveform consistently."""
-    plt.plot(np.arange(sound.size) / float(fs), sound)
-    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title(title)
 
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
@@ -51,40 +49,37 @@ def main(
     outputFile = os.path.join(output_dir, f"{stem}_stochasticModelTransformation.wav")
     UF.wavwrite(y, fs, outputFile)
 
-    # create figure to plot
-    plt.figure(figsize=(9, 6))
 
-    # plot the input sound
-    plt.subplot(4, 1, 1)
-    _plot_waveform(x, fs, "input sound: x")
+    setup_plot_style()
+    fig, axes = plt.subplots(4, 1, figsize=(9, 6))
+
+    # plot input sound
+    plot_waveform(axes[0], x, fs, title="input sound: x")
 
     # plot stochastic representation
-    plt.subplot(4, 1, 2)
     numFrames = int(mYst[:, 0].size)
     frmTime = H * np.arange(numFrames) / float(fs)
     binFreq = np.arange(int(stocf * H)) * float(fs) / (stocf * 2 * H)
-    plt.pcolormesh(frmTime, binFreq, np.transpose(mYst))
-    plt.autoscale(tight=True)
-    plt.xlabel("time (sec)")
-    plt.ylabel("frequency (Hz)")
-    plt.title("stochastic approximation")
+    axes[1].pcolormesh(frmTime, binFreq, np.transpose(mYst))
+    axes[1].autoscale(tight=True)
+    axes[1].set_xlabel("time (sec)")
+    axes[1].set_ylabel("frequency (Hz)")
+    axes[1].set_title("stochastic approximation")
 
     # plot modified stochastic representation
-    plt.subplot(4, 1, 3)
     numFrames = int(ystocEnv[:, 0].size)
     frmTime = H * np.arange(numFrames) / float(fs)
     binFreq = np.arange(int(stocf * H)) * float(fs) / (stocf * 2 * H)
-    plt.pcolormesh(frmTime, binFreq, np.transpose(ystocEnv))
-    plt.autoscale(tight=True)
-    plt.xlabel("time (sec)")
-    plt.ylabel("frequency (Hz)")
-    plt.title("modified stochastic approximation")
+    axes[2].pcolormesh(frmTime, binFreq, np.transpose(ystocEnv))
+    axes[2].autoscale(tight=True)
+    axes[2].set_xlabel("time (sec)")
+    axes[2].set_ylabel("frequency (Hz)")
+    axes[2].set_title("modified stochastic approximation")
 
-    # plot the output sound
-    plt.subplot(4, 1, 4)
-    _plot_waveform(y, fs, "output sound: y")
+    # plot output sound
+    plot_waveform(axes[3], y, fs, title="output sound: y")
 
-    plt.tight_layout()
+    fig.tight_layout()
     plt.show()
 
 

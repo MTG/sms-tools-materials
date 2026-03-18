@@ -3,19 +3,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import sys
 from scipy.signal import get_window
 from smstools.models import utilFunctions as UF
 from smstools.models import sineModel as SM
 from smstools.models import harmonicModel as HM
-
-
-def _plot_waveform(sound, fs, title="sound"):
-    """Helper to plot a waveform consistently."""
-    plt.plot(np.arange(sound.size) / float(fs), sound)
-    plt.axis([0, sound.size / float(fs), min(sound), max(sound)])
-    plt.ylabel("amplitude")
-    plt.xlabel("time (sec)")
-    plt.title(title)
+_this_dir = os.path.dirname(os.path.abspath(__file__))
+if _this_dir not in sys.path:
+    sys.path.insert(0, _this_dir)
+import plot_helpers as PH
 
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
@@ -81,21 +77,16 @@ def main(
 
     # plot the input sound
     plt.subplot(3, 1, 1)
-    _plot_waveform(x, fs, "input sound: x")
+    PH.plot_waveform(plt.gca(), x, fs, title="input sound: x")
 
     # plot the harmonic frequencies
     plt.subplot(3, 1, 2)
     if hfreq.shape[1] > 0:
-        numFrames = hfreq.shape[0]
-        frmTime = H * np.arange(numFrames) / float(fs)
-        hfreq[hfreq <= 0] = np.nan
-        plt.plot(frmTime, hfreq)
-        plt.axis([0, x.size / float(fs), 0, maxplotfreq])
-        plt.title("frequencies of harmonic tracks")
+        PH.plot_frequency_tracks(plt.gca(), hfreq, fs, H, title="frequencies of harmonic tracks", max_freq=maxplotfreq)
 
     # plot the output sound
     plt.subplot(3, 1, 3)
-    _plot_waveform(y, fs, "output sound: y")
+    PH.plot_waveform(plt.gca(), y, fs, title="output sound: y")
 
     plt.tight_layout()
     plt.ion()

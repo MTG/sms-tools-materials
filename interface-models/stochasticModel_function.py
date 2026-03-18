@@ -7,21 +7,10 @@ from scipy.signal.windows import hann
 from smstools.models import utilFunctions as UF
 from smstools.models import stochasticModel as STM
 from smstools.models import stft as STFT
-
-
-def _plot_spectrogram(sound, fs, N, H, maxplotfreq, title="spectrogram"):
-    """Helper to plot a magnitude spectrogram consistently."""
-    mX, pX = STFT.stftAnal(sound, hann(N), N, H)
-    numFrames = int(mX[:, 0].size)
-    frmTime = H * np.arange(numFrames) / float(fs)
-    binFreq = fs * np.arange(N * maxplotfreq / fs) / N
-    plt.pcolormesh(
-        frmTime, binFreq, np.transpose(mX[:, : int(N * maxplotfreq / fs + 1)])
-    )
-    plt.xlabel("time (sec)")
-    plt.ylabel("frequency (Hz)")
-    plt.title(title)
-    plt.autoscale(tight=True)
+_this_dir = os.path.dirname(os.path.abspath(__file__))
+if _this_dir not in sys.path:
+    sys.path.insert(0, _this_dir)
+import plot_helpers as PH
 
 _sounds_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "sounds"))
 
@@ -70,11 +59,12 @@ def main(
 
     # plot input spectrogram
     plt.subplot(2, 1, 1)
-    _plot_spectrogram(x, fs, N, H, maxplotfreq, "input magnitude spectrogram")
+    mX_in, _ = STFT.stftAnal(x, hann(N), N, H)
+    PH.plot_spectrogram(plt.gca(), mX_in, fs, N, H, max_plot_freq=maxplotfreq, title="input magnitude spectrogram")
 
-    # plot the output sound
     plt.subplot(2, 1, 2)
-    _plot_spectrogram(y, fs, N, H, maxplotfreq, "output magnitude spectrogram")
+    mX_out, _ = STFT.stftAnal(y, hann(N), N, H)
+    PH.plot_spectrogram(plt.gca(), mX_out, fs, N, H, max_plot_freq=maxplotfreq, title="output magnitude spectrogram")
 
     plt.tight_layout()
     plt.ion()
