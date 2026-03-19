@@ -47,9 +47,10 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="blackman", M=
 
     # plot the sound fragment
     plt.subplot(4, 1, 1)
-    t = time + np.arange(M) / float(fs)
-    PH.plot_waveform(plt.gca(), x1, fs, title="input sound: x")
-    plt.xlim([time, time + M / float(fs)])
+    #t = time + np.arange(M) / float(fs)
+    PH.plot_waveform(plt.gca(), x1, fs, title="input sound: x1")
+    #plt.xlim([time, time + M / float(fs)])
+    plt.xlim([0, 0 + M / float(fs)]) # not strictly needed
 
     # plot the magnitude spectrum
     plt.subplot(4, 1, 2)
@@ -65,7 +66,8 @@ def main(inputFile=os.path.join(_sounds_dir, "piano.wav"), window="blackman", M=
     # plot the sound resulting from the inverse dft
     plt.subplot(4, 1, 4)
     PH.plot_waveform(plt.gca(), y, fs, title="output sound: y")
-    plt.xlim([time, time + M / float(fs)])
+    #plt.xlim([time, time + M / float(fs)])
+    plt.xlim([0, 0 + M / float(fs)]) # not strictly needed
 
     plt.tight_layout()
     plt.ion()
