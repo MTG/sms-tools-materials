@@ -37,3 +37,6 @@ examples/descSounds/
 examples/svm_query_sound/
 examples/svm_results/
 examples/svm_train_sounds/
+
+# Ignore VS Code settings
+.vscode/
