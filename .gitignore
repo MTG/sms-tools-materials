@@ -40,3 +40,6 @@ examples/svm_train_sounds/
 
 # Ignore VS Code settings
 .vscode/
+
+# Ignore Libre Office temporary files
+lectures/*/*.odp
