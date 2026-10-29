@@ -27,7 +27,8 @@ interface-transformations/output_sounds/*.wav
 
 #ignore working directories
 labs/
-labs-solutions
+labs-solutions/
+exercises-solutions/
 
 # ignore generated wav files in lecture plots
 lectures/*/plots-code/*.wav
