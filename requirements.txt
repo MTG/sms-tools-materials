@@ -6,3 +6,4 @@ scipy
 ipython
 essentia
 git+https://github.com/MTG/freesound-python
+ipywidgets
